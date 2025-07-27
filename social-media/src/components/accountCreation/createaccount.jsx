@@ -41,21 +41,59 @@ const CenteredForm = () => {
         <form className="centered-form" onSubmit={handleSubmit}>
           <h1>Create Account</h1>
 
-          {['name', 'email', 'age', 'contactno', 'password'].map((field, index) => (
-            <div className="form-row" key={index}>
-              <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
-              <input
-                type={field === 'password' ? 'password' : field === 'email' ? 'email' : field === 'age' ? 'number' : 'text'}
-                name={field}
-                required
-                onChange={handleChange}
-              />
-            </div>
-          ))}
+          <div className="form-row">
+            <label>Full Name:</label>
+            <input
+              type="text"
+              name="name"
+              required
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-row">
+            <label>Email Address:</label>
+            <input
+              type="email"
+              name="email"
+              required
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-row">
+            <label>Age:</label>
+            <input
+              type="number"
+              name="age"
+              required
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-row">
+            <label>Phone Number:</label>
+            <input
+              type="text"
+              name="contactno"
+              required
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-row">
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              required
+              onChange={handleChange}
+            />
+          </div>
 
           <button type="submit">Register</button>
 
-          <h6 className="text-center" style={{color: 'white'}}>Already have an account?</h6>
+          <h6 className="text-center" style={{ color: 'white' }}>Already have an account?</h6>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Link to="/login">
               <button className="btn btn-danger">Log In</button>
@@ -70,3 +108,4 @@ const CenteredForm = () => {
 };
 
 export default CenteredForm;
+

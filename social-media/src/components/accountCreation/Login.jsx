@@ -40,7 +40,7 @@ const Login = () => {
 
           <div className="form-row">
             <label>Email:</label>
-            <input
+            &nbsp;<input
               type="email"
               name="email"
               required
