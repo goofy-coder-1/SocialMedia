@@ -1,0 +1,162 @@
+const User = require('../models/userModel');
+const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+// Temporary in-memory store for unverified users
+const tempStore = new Map();
+
+
+// 📩 Step 1: Handle registration and send verification code
+const requestVerificationCode = async (req, res) => {
+  try {
+    const { name, email, age, contactno, password } = req.body;
+    const sanitizedEmail = email?.toLowerCase().trim();
+
+    // Prevent duplicate registrations
+    const existingUser = await User.findOne({ email: sanitizedEmail });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already registered' });
+    }
+
+    // Hash password and generate verification code
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+
+    // Temporarily store user data
+    tempStore.set(sanitizedEmail, {
+      name,
+      email: sanitizedEmail,
+      age,
+      contactno,
+      password: hashedPassword,
+      verificationCode,
+      codeExpiresAt
+    });
+
+    // Configure email transport
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: sanitizedEmail,
+      subject: 'Your Verification Code',
+      text: `Your code is ${verificationCode}. It expires in 30 minutes.`
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Verification code sent to email.' });
+
+  } catch (err) {
+    console.error('Error sending verification code:', err);
+    res.status(500).json({ message: 'Server error during registration' });
+  }
+};
+
+
+// ✅ Step 2: Verify code and create account
+const verifyEmailCode = async (req, res) => {
+  try {
+    const { email, code } = req.body;
+    const sanitizedEmail = email?.toLowerCase().trim();
+    const storedData = tempStore.get(sanitizedEmail);
+
+    if (!storedData) {
+      return res.status(404).json({ message: 'No pending registration found for this email' });
+    }
+
+    if (storedData.codeExpiresAt < Date.now()) {
+      tempStore.delete(sanitizedEmail);
+      return res.status(400).json({ message: 'Code expired. Please re-register.' });
+    }
+
+    console.log('Stored code:', storedData.verificationCode);
+    console.log('Received code:', code);
+
+    if (String(storedData.verificationCode).trim() !== String(code).trim()) {
+      return res.status(400).json({ message: 'Invalid code' });
+    }
+
+    const alreadyExists = await User.findOne({ email: storedData.email });
+    if (alreadyExists) {
+      tempStore.delete(sanitizedEmail);
+      return res.status(400).json({ message: 'Email already verified. Please log in.' });
+    }
+
+    // 🔍 Log the data being saved
+    const userPayload = {
+      name: storedData.name,
+      email: storedData.email,
+      age: storedData.age,
+      contactno: storedData.contactno,
+      password: storedData.password,
+      isVerified: true
+    };
+
+    console.log('Attempting to save user with:', userPayload);
+
+    const newUser = new User(userPayload);
+
+    try {
+      await newUser.save();
+    } catch (saveErr) {
+      console.error('❌ Error saving user:', saveErr);
+      return res.status(500).json({
+        message: 'Error saving user to database',
+        error: saveErr.message,
+        details: saveErr.errors || null
+      });
+    }
+
+    tempStore.delete(sanitizedEmail);
+    res.status(201).json({ message: 'Account created and verified successfully.' });
+
+  } catch (err) {
+    console.error('❌ Verification error:', err);
+    res.status(500).json({ message: 'Server error during verification' });
+  }
+};
+
+
+// 🔐 Step 3: User login
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const sanitizedEmail = email?.toLowerCase().trim();
+
+    const user = await User.findOne({ email: sanitizedEmail });
+    if (!user) {
+      return res.status(404).json({ message: 'Account not found' });
+    }
+
+    if (!user.isVerified) {
+      return res.status(403).json({ message: 'Email not verified' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(200).json({ token, message: 'Login successful' });
+
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ message: 'Server error during login' });
+  }
+};
+
+module.exports = {
+  requestVerificationCode,
+  verifyEmailCode,
+  loginUser
+};

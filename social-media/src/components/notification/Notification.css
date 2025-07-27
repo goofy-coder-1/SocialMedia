@@ -1,0 +1,88 @@
+/* 🔮 Background wrapper */
+.notification-here {
+  background-color: #e6e7e8;
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.notifications {
+  background-color: #b2b2b5;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  width: 100%;
+  margin: auto;
+  height: 98%;
+}
+
+.notifications li {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* 🟡 Unread highlight */
+.bg-warning-subtle {
+  background-color: #a0c2e2 !important;
+}
+
+
+.bg-light {
+  background-color: #f4f4f4 !important;
+}
+
+/* 📷 Avatar styling */
+.notifications img {
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+.notifications img:hover {
+  transform: scale(1.05);
+}
+
+/* 📍 Button spacing */
+.notifications button {
+  font-size: 1rem;
+}
+
+/* 🗨️ Text preview */
+.notifications strong {
+  font-weight: 600;
+  color: #2b2b2b;
+}
+.notifications small {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+/* 🎯 Responsive tweaks */
+@media (max-width: 768px) {
+  .notifications {
+    padding: 15px;
+  }
+  .notifications img {
+    width: 32px;
+    height: 32px;
+  }
+  .notifications strong {
+    font-size: 0.9rem;
+  }
+  .notify-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .notify-actions button {
+    height: 40px;
+    font-size: medium;
+  }
+}
+.notifications li:hover {
+  background-color: #f0f0f8;
+  transform: translateY(-2px);
+}
+.notify-div {
+  height: 100px;
+  font-size: 1.3rem;
+}

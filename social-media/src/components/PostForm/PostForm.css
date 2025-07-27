@@ -1,0 +1,19 @@
+.post-content {
+    display: flex;
+    gap: 800px
+}
+.post-button {
+    height: 40px;
+    width: 80px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(18, 105, 140);
+    color: white;
+}
+@media (max-width: 768px) {
+    .post-content {
+        display: flex;
+        gap: 45px;
+    }
+}

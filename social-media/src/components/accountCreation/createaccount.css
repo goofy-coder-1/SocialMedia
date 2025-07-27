@@ -1,0 +1,85 @@
+.centered-background {
+  background-image: url('/public/backgr.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centered-overlay {
+  background: rgba(15, 10, 20, 0.85);
+  padding: 40px;
+  border-radius: 20px;
+  color: white;
+  max-width: 500px;
+  width: 90%;
+}
+
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px; /* ⬆️ Increase from 400px to 600px */
+  padding: 30px 40px; /* ⬆️ Add padding for breathing room */
+  background: transparent;
+}
+
+.centered-form h2 {
+  text-align: center;
+  font-family: Orbitron;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.form-row label {
+  flex: 1;
+  text-align: right;
+  font-family: Orbitron;
+  font-weight: 500;
+}
+
+.form-row input {
+  flex: 2;
+  padding: 10px 14px;
+  border-radius: 25px;
+  border: none;
+  font-family: Orbitron;
+  font-size: 16px;
+}
+
+.centered-form button {
+  padding: 12px 20px;
+  border-radius: 25px;
+  background-color: #693379;
+  color: white;
+  border: none;
+  font-family: Orbitron;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.centered-form button:hover {
+  background-color: #8a4e9a;
+}
+
+@media (max-width: 768px) {
+  .centered-overlay {
+    padding: 0px;
+  }
+  .form-row {
+    gap: 25px;
+  }
+}

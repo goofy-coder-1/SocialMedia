@@ -1,0 +1,115 @@
+/* 🔮 Wrapper for full page */
+.friend-wrapper {
+  background-color: #e6e7e8;
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* 📦 Friend request container */
+.friend-panel {
+  background-color: #b2b2b5;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  width: 100%;
+  margin: auto;
+  height: 98%;
+}
+
+/* 📜 Each request item */
+.friend-panel li {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  animation: fadeInUp 0.4s ease forwards;
+  opacity: 0;
+}
+
+/* ✨ Entry animation */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 🟡 Hover effect on cards */
+.friend-panel li:hover {
+  background-color: #f0f0f8;
+  transform: translateY(-2px);
+}
+
+/* 📷 Avatar style */
+.friend-panel img {
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+.friend-panel img:hover {
+  transform: scale(1.05);
+}
+
+/* 👤 Name styling */
+.friend-panel strong {
+  font-weight: 600;
+  color: #2b2b2b;
+  font-size: 1.2rem;
+}
+
+/* 🎯 Button group wrapper */
+.friend-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* 🧨 Button base style */
+.friend-panel button {
+  font-size: 1rem;
+  padding: 6px 12px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* 🟢 Accept hover */
+.friend-panel button.btn-outline-success:hover {
+  background-color: #28a745;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* 🔴 Reject hover */
+.friend-panel button.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* 📱 Responsive adjustments */
+@media (max-width: 768px) {
+  .friend-panel {
+    padding: 15px;
+  }
+
+  .friend-panel img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .friend-panel strong {
+    font-size: 1rem;
+  }
+
+  .friend-panel button {
+    font-size: 0.85rem;
+  }
+
+  .friend-actions {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
