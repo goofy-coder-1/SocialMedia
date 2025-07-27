@@ -58,10 +58,10 @@ const rollingMessages = [
       const res = await axios.get('https://newsdata.io/api/1/news', {
         params: {
           apikey: 'pub_3a78d54f117d46949826390804bc4aa8',
-          q: 'sports',
+          q: 'science',
           language: 'en',
           country: 'us',
-          category: 'sports',
+          category: 'science',
         },
       });
 
