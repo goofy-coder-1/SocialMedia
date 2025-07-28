@@ -56,7 +56,7 @@ const PostForm = () => {
         type="file"
         accept="image/*"
         onChange={(e) => setPhoto(e.target.files[0])}
-        style={{ marginTop: '8px' }}
+        style={{ marginTop: '8px'}}
       />
       <button className='post-button' type="submit" style={{ display: 'block', marginTop: '8px' }}>
         Post

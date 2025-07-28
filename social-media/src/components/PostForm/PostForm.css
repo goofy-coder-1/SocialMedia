@@ -12,5 +12,10 @@
     color: white;
 }
 @media (max-width: 768px) {
-    
+    .post-content{
+        gap: 0px;
+    }
+    .choose-file {
+        width: 225px;
+    }
 }
