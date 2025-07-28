@@ -14,5 +14,6 @@
 @media (max-width: 768px) {
     .post-content {
         display: flex;
+        gap: 10px;
     }
 }
