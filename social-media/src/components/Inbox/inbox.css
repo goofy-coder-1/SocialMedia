@@ -1,0 +1,77 @@
+/* 📬 Inbox Container */
+.inbox-container {
+  background-color: #e6e7e8;
+  min-height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* 🧾 Inbox List Styling */
+.inbox-list {
+  background-color: #b2b2b5;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  width: 100%;
+  margin: auto;
+  height: 90vh;
+}
+.rounded-circle {
+    height: 100px;
+}
+
+.inbox-list .list-group-item {
+  background-color: #f8f9fa;
+  border: none;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.inbox-list .list-group-item:hover {
+  background-color: #dce7f7;
+  transform: translateY(-2px);
+}
+
+/* 👤 Avatar Styling */
+.inbox-list img {
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.inbox-list img:hover {
+  transform: scale(1.05);
+}
+
+/* 📝 Friend Name */
+.inbox-list strong {
+  font-size: 1.2rem;
+  color: #2b2b2b;
+}
+
+/* 🧾 No Friends Message */
+.alert.alert-secondary {
+  background-color: #c5c7cb;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .inbox-list {
+    padding: 15px;
+  }
+
+  .inbox-list img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .inbox-list strong {
+    font-size: 1rem;
+  }
+}

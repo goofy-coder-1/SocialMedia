@@ -4,26 +4,39 @@ import { useLocation } from 'react-router-dom';
 import PostForm from '../PostForm/postForm';
 import { PostContext } from '/src/contextapi/postcontext.jsx';
 import { SlLike } from "react-icons/sl";
-
+import { useFriendContext } from '/src/contextapi/Friendcontext.jsx';
 import '../Home/Home.css';
 
 const Home = () => {
-const rollingMessages = [
-  "Welcome to your dashboard!",
-  "Check out the latest sports news!",
-  "Don't forget to like and comment.",
-  "New blog posts added weekly.",
-  "Stay tuned for exciting updates!",
-  "The website is still under construction"
-];
-
-
   const { posts, setPosts, handlePostCreated } = useContext(PostContext);
   const [blogs, setBlogs] = useState([]);
   const [commentText, setCommentText] = useState({});
   const token = localStorage.getItem('token');
   const location = useLocation();
   const [showAllComments, setShowAllComments] = useState({});
+  const [friends, setFriends] = useState([])
+  const { refreshFriends } = useFriendContext();
+  const [loading, setLoading] = useState(true);
+  
+useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const res = await axios.get('http://localhost:4000/api/friends', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setFriends(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error('Failed to fetch friends:', err.message);
+        setFriends([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    setLoading(true); // Show spinner while re-fetching
+    fetchFriends();
+  }, [refreshFriends]);
 
   const toggleCommentView = (postId) => {
   setShowAllComments((prev) => ({
@@ -283,12 +296,32 @@ const rollingMessages = [
       </main>
 
       {/* Right Sidebar */}
-      <aside className="rightbar">
-      <h1>WEBSITE</h1><br/>
-      <h1>UNDER</h1> <br/>
-      <h4>CONSTRUCTION</h4>
-</aside>
-
+  <div className="inbox-container">
+      {friends.length === 0 ? (
+        <div className="alert alert-secondary mt-3">No friends to message yet.</div>
+      ) : (
+        <div className="inbox-list">
+          <h2 style={{fontFamily: 'orbitron'}}>FRIENDS</h2>
+          <ul className="list-group">
+            {friends.map((friend) => (
+              <li
+                key={friend._id}
+                className="list-group-item d-flex align-items-center"
+                onClick={() => console.log(`Open chat with ${friend.name}`)}
+              >
+                <img
+                  src={friend.profilePic || '/default-avatar.png'}
+                  alt={friend.name}
+                  style={{height: '60px'}}
+                  className="rounded-circle me-3"
+                />
+                <strong style={{fontSize: 'small'}}>{friend.name}</strong>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
 
     </div>
   );
