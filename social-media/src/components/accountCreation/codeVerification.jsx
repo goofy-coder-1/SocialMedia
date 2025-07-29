@@ -12,7 +12,7 @@ const CodeVerification = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/users/verify-code', { email, code });
+      await axios.post('https://social-media-y4in.onrender.com/api/users/verify-code', { email, code });
       setMessage('Account created successfully!');
       localStorage.removeItem('pendingEmail');
       setTimeout(() => navigate('/login'), 2000);

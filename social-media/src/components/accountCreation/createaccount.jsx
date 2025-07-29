@@ -26,7 +26,7 @@ const CenteredForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/users/request-code', formData);
+      await axios.post('https://social-media-y4in.onrender.com/api/users/request-code', formData);
       localStorage.setItem('pendingEmail', formData.email);
       navigate('/code');
     } catch (err) {
