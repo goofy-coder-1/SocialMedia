@@ -8,11 +8,12 @@ const CodeVerification = () => {
   const [message, setMessage] = useState('');
   const email = localStorage.getItem('pendingEmail');
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://social-media-y4in.onrender.com/api/users/verify-code', { email, code });
+      await axios.post(`${BASE_URL}/api/users/verify-code`, { email, code });
       setMessage('Account created successfully!');
       localStorage.removeItem('pendingEmail');
       setTimeout(() => navigate('/login'), 2000);

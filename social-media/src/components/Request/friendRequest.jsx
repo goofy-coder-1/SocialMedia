@@ -7,13 +7,14 @@ const FriendRequest = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { triggerRefresh } = useFriendContext();
 
   // Fetch all pending friend requests from the server
   const fetchRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/friend-requests', {
+      const response = await axios.get(`${BASE_URL}/api/friend-requests`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -30,7 +31,7 @@ const FriendRequest = () => {
   const acceptRequest = async (userId) => {
     try {
       await axios.post(
-        `http://localhost:4000/api/friend-request/accept/${userId}`,
+        `${BASE_URL}/api/friend-request/accept/${userId}`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -48,7 +49,7 @@ const FriendRequest = () => {
   // Decline a friend request
   const declineRequest = async (userId) => {
     try {
-      await axios.delete(`http://localhost:4000/api/friend-request/delete/${userId}`, {
+      await axios.delete(`${BASE_URL}/api/friend-request/delete/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

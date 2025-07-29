@@ -8,11 +8,12 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/usersprofile/profile/${id}`);
+        const res = await axios.get(`${BASE_URL}/api/usersprofile/profile/${id}`);
         setUser(res.data.user);
         setPosts(res.data.posts);
       } catch (error) {

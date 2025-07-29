@@ -15,6 +15,7 @@ const Profile = () => {
   const [editPhoto, setEditPhoto] = useState(null);
   const [openMenuPostId, setOpenMenuPostId] = useState(null);
   const menuRef = useRef(null);
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { user, setUser } = useContext(UserContext);
   const authToken = localStorage.getItem('token');
@@ -39,7 +40,7 @@ const Profile = () => {
 
   const loadProfileData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/usersprofile/profile/me', {
+      const response = await axios.get(`${BASE_URL}/api/usersprofile/profile/me`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setUser(response.data.user);
@@ -56,7 +57,7 @@ const Profile = () => {
   const handleLike = async (postId) => {
     try {
       await axios.put(
-        `http://localhost:4000/api/postsapi/posts/${postId}/like`,
+        `${BASE_URL}/api/postsapi/posts/${postId}/like`,
         {},
         {
           headers: { Authorization: `Bearer ${authToken}` },
@@ -74,7 +75,7 @@ const Profile = () => {
 
     try {
       await axios.post(
-        `http://localhost:4000/api/postsapi/posts/${postId}/comment`,
+        `${BASE_URL}/api/postsapi/posts/${postId}/comment`,
         { text },
         {
           headers: { Authorization: `Bearer ${authToken}` },
@@ -100,7 +101,7 @@ const Profile = () => {
       if (editPhoto) formData.append('photo', editPhoto);
 
       await axios.put(
-        `http://localhost:4000/api/postsapi/posts/${editingPost._id}`,
+        `${BASE_URL}/api/postsapi/posts/${editingPost._id}`,
         formData,
         {
           headers: {
@@ -122,7 +123,7 @@ const Profile = () => {
 
     try {
       await axios.delete(
-        `http://localhost:4000/api/postsapi/posts/${postId}`,
+        `${BASE_URL}/api/postsapi/posts/${postId}`,
         {
           headers: { Authorization: `Bearer ${authToken}` },
         }

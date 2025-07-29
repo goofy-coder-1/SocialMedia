@@ -17,11 +17,12 @@ const Home = () => {
   const [friends, setFriends] = useState([])
   const { refreshFriends } = useFriendContext();
   const [loading, setLoading] = useState(true);
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   
 useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/friends', {
+        const res = await axios.get(`${BASE_URL}/api/friends`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -55,7 +56,7 @@ useEffect(() => {
   // Load user posts
   const loadContent = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/api/postsapi/getposts', {
+      const res = await axios.get(`${BASE_URL}/api/postsapi/getposts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data.posts || []);
@@ -99,7 +100,7 @@ useEffect(() => {
   const handleLike = async (postId) => {
     try {
       await axios.put(
-        `http://localhost:4000/api/postsapi/posts/${postId}/like`,
+        `${BASE_URL}/api/postsapi/posts/${postId}/like`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -118,7 +119,7 @@ useEffect(() => {
 
     try {
       await axios.post(
-        `http://localhost:4000/api/postsapi/posts/${postId}/comment`,
+        `${BASE_URL}/api/postsapi/posts/${postId}/comment`,
         { text },
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -20,10 +20,10 @@ const ProfileUpdate = () => {
     formData.append('bio', bio);
     formData.append('birthdate', birthdate);
     if (profilePic) formData.append('profilePic', profilePic);
-
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
     try {
       const res = await axios.put(
-        'http://localhost:4000/api/usersprofile/profile/update',
+        `${BASE_URL}/api/usersprofile/profile/update`,
         formData,
         {
           headers: {

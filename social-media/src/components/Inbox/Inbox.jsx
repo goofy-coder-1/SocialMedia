@@ -8,11 +8,12 @@ const Inbox = () => {
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
   const { refreshFriends } = useFriendContext();
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/friends', {
+        const res = await axios.get(`${BASE_URL}/api/friends`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

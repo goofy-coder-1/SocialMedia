@@ -6,12 +6,13 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('token');
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   // 🔄 Load notifications when component mounts
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const { data } = await axios.get('http://localhost:4000/api/pop/notifications', {
+        const { data } = await axios.get(`${BASE_URL}/api/pop/notifications`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -30,7 +31,7 @@ const Notifications = () => {
   // ✅ Mark a notification as read
   const markAsRead = async (id) => {
     try {
-      await axios.patch(`http://localhost:4000/api/pop/notifications/${id}/read`, {}, {
+      await axios.patch(`${BASE_URL}/api/pop/notifications/${id}/read`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -45,7 +46,7 @@ const Notifications = () => {
   // 🗑️ Delete a notification
   const deleteNotification = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/pop/notifications/${id}`, {
+      await axios.delete(`${BASE_URL}/api/pop/notifications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

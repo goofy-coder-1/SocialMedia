@@ -14,6 +14,7 @@ const CenteredForm = () => {
 
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;  // <-- Using env variable here
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +27,8 @@ const CenteredForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://social-media-y4in.onrender.com/api/users/request-code', formData);
+      // <-- Use BASE_URL here instead of hardcoded URL
+      await axios.post(`${BASE_URL}/api/users/request-code`, formData);
       localStorage.setItem('pendingEmail', formData.email);
       navigate('/code');
     } catch (err) {
@@ -108,4 +110,5 @@ const CenteredForm = () => {
 };
 
 export default CenteredForm;
+
 

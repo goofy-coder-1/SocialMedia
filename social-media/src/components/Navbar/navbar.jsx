@@ -12,6 +12,7 @@ const Navbar = () => {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const currentPath = useLocation().pathname;
+  
 
   const handleSearch = () => {
     const trimmedQuery = query.trim();
