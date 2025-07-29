@@ -46,19 +46,28 @@ const Inbox = () => {
           <ul className="list-group">
             {friends.map((friend) => (
               <li
+              style={{display: 'flex', justifyContent: 'space-between'}}
                 key={friend._id}
                 className="list-group-item d-flex align-items-center"
                 onClick={() => console.log(`Open chat with ${friend.name}`)}
               >
+                <div>
                 <img
                   src={friend.profilePic || '/default-avatar.png'}
                   alt={friend.name}
                   className="rounded-circle me-3"
                 />
                 <strong>{friend.name}</strong>
+                </div>
+                <div>
+                <button className='btn btn-primary'>Message</button>
+                </div>
               </li>
+              
             ))}
+           
           </ul>
+          
         </div>
       )}
     </div>

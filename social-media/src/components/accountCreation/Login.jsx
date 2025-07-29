@@ -24,7 +24,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/api/users/login', formData);
+      const res = await axios.post('https://social-media-y4in.onrender.com/api/users/login', formData);
 
       // Save token in localStorage
       localStorage.setItem('token', res.data.token);
