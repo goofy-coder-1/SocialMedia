@@ -44,7 +44,7 @@ const SearchResults = () => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${baseUrl}}/api/usersprofile/search`, {
+        const res = await axios.get(`${baseUrl}/api/usersprofile/search`, {
           params: { q: query },
           headers: { Authorization: `Bearer ${token}` },
         });
