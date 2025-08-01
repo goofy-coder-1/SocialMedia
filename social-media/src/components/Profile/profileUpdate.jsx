@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../contextapi/usercontext';
 import '../Profile/Profile.css';
+import { baseUrl } from '../../../url.js'
 
 const ProfileUpdate = () => {
   const { user, setUser } = useContext(UserContext);
@@ -23,7 +24,7 @@ const ProfileUpdate = () => {
 
     try {
       const res = await axios.put(
-        'http://localhost:4000/api/usersprofile/profile/update',
+        `${baseUrl}/api/usersprofile/profile/update`,
         formData,
         {
           headers: {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../accountCreation/createaccount.css';
-import '../../../url.js'
+import { baseUrl } from '../../../url.js'
 
 const CenteredForm = () => {
   const [formData, setFormData] = useState({
