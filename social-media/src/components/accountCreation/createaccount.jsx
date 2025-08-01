@@ -88,16 +88,6 @@ const CenteredForm = () => {
           </div>
 
           <div className="form-row">
-            <label>Phone Number:</label>
-            <input
-              type="text"
-              name="contactno"
-              required
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-row">
             <label>Password:</label>
             <input
               type="password"
