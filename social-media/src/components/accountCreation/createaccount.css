@@ -13,14 +13,12 @@
 
 .centered-overlay {
   background: rgba(15, 10, 20, 0.85);
-  padding: 20px;
+  padding: 10px;
   border-radius: 20px;
   color: white;
   max-width: 500px;
   width: 90%;
-  height: 750px;
-  margin-top: 45px;
-  margin-bottom: 45px;
+  height: 650px;
 }
 
 .centered-form {
