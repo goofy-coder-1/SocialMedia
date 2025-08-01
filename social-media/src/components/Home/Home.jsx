@@ -56,7 +56,7 @@ useEffect(() => {
  
   const loadContent = async () => {
     try {
-      const res = await axios.get(`${baseUrl}http://localhost:4000/api/postsapi/getposts`, {
+      const res = await axios.get(`${baseUrl}/api/postsapi/getposts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data.posts || []);
