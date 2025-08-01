@@ -25,7 +25,7 @@ const App = () => {
       <UserContext.Provider value={{ user, setUser }}>
         <PostProvider>
           <FriendProvider>
-          <NavBar /> {/* NavBar with search and links */}
+          <NavBar />
 
           <Routes>
             <Route path="/" element={<Home />} />

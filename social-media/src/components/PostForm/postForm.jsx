@@ -8,7 +8,6 @@ const PostForm = () => {
   const [photo, setPhoto] = useState(null);
   const [message, setMessage] = useState('');
   const { handlePostCreated } = useContext(PostContext);
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const token = localStorage.getItem('token');
 
@@ -24,7 +23,7 @@ const PostForm = () => {
     if (photo) formData.append('photo', photo);
 
     try {
-      const res = await axios.post(`${BASE_URL}/api/postsapi/posts`, formData, {
+      const res = await axios.post('http://localhost:4000/api/postsapi/posts', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

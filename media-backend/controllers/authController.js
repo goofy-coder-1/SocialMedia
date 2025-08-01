@@ -3,28 +3,25 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Temporary in-memory store for unverified users
 const tempStore = new Map();
 
 
-// 📩 Step 1: Handle registration and send verification code
 const requestVerificationCode = async (req, res) => {
   try {
     const { name, email, age, contactno, password } = req.body;
     const sanitizedEmail = email?.toLowerCase().trim();
 
-    // Prevent duplicate registrations
+   
     const existingUser = await User.findOne({ email: sanitizedEmail });
     if (existingUser) {
       return res.status(400).json({ message: 'User already registered' });
     }
 
-    // Hash password and generate verification code
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+    const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000); 
 
-    // Temporarily store user data
     tempStore.set(sanitizedEmail, {
       name,
       email: sanitizedEmail,
@@ -35,7 +32,7 @@ const requestVerificationCode = async (req, res) => {
       codeExpiresAt
     });
 
-    // Configure email transport
+
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
@@ -61,7 +58,7 @@ const requestVerificationCode = async (req, res) => {
 };
 
 
-// ✅ Step 2: Verify code and create account
+
 const verifyEmailCode = async (req, res) => {
   try {
     const { email, code } = req.body;
@@ -90,7 +87,7 @@ const verifyEmailCode = async (req, res) => {
       return res.status(400).json({ message: 'Email already verified. Please log in.' });
     }
 
-    // 🔍 Log the data being saved
+ 
     const userPayload = {
       name: storedData.name,
       email: storedData.email,
@@ -125,7 +122,6 @@ const verifyEmailCode = async (req, res) => {
 };
 
 
-// 🔐 Step 3: User login
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;

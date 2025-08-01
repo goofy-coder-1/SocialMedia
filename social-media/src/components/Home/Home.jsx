@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PostForm from '../PostForm/postForm';
 import { PostContext } from '/src/contextapi/postcontext.jsx';
 import { SlLike } from "react-icons/sl";
@@ -17,12 +17,11 @@ const Home = () => {
   const [friends, setFriends] = useState([])
   const { refreshFriends } = useFriendContext();
   const [loading, setLoading] = useState(true);
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   
 useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/friends`, {
+        const res = await axios.get('http://localhost:4000/api/friends', {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -35,7 +34,7 @@ useEffect(() => {
       }
     };
 
-    setLoading(true); // Show spinner while re-fetching
+    setLoading(true);
     fetchFriends();
   }, [refreshFriends]);
 
@@ -53,10 +52,10 @@ useEffect(() => {
     }
   }, [location.pathname]);
 
-  // Load user posts
+ 
   const loadContent = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/api/postsapi/getposts`, {
+      const res = await axios.get('http://localhost:4000/api/postsapi/getposts', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data.posts || []);
@@ -66,7 +65,6 @@ useEffect(() => {
     }
   };
 
-  // Load blogs
   const fetchBlogs = async () => {
     try {
       const res = await axios.get('https://newsdata.io/api/1/news', {
@@ -96,11 +94,11 @@ useEffect(() => {
     }
   };
 
-  // Like a post
+ 
   const handleLike = async (postId) => {
     try {
       await axios.put(
-        `${BASE_URL}/api/postsapi/posts/${postId}/like`,
+        `http://localhost:4000/api/postsapi/posts/${postId}/like`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -112,14 +110,13 @@ useEffect(() => {
     }
   };
 
-  // Comment on a post
   const handleComment = async (postId) => {
     const text = commentText[postId];
     if (!text?.trim()) return;
 
     try {
       await axios.post(
-        `${BASE_URL}/api/postsapi/posts/${postId}/comment`,
+        `http://localhost:4000/api/postsapi/posts/${postId}/comment`,
         { text },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -134,18 +131,18 @@ useEffect(() => {
 
   return (
     <div className="home-wrapper">
-      {/* Left Sidebar */}
+      {/* Left Sidebar for simple controls*/}
       <div className="sidebar">
         <ul>
           <li style={{fontSize: '20px'}}>🔖 Bookmarks</li>
           <li className='lists'>⚙️ Settings</li>
           <li className='lists'>🕓 History</li>
           <li className='lists'>✔️ Saved Posts</li>
-          <li className='lists'>👤 Profile</li>
+          <Link to='/profile' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>👤 Profile</li></Link>
         </ul>
       </div>
 
-      {/* Main Feed */}
+       {/* main feed which is used to show posts along with blogs  */}
       <main className="feed">
         <h2>Create a Post</h2>
         <PostForm onPostCreated={handlePostCreated} />
@@ -313,7 +310,7 @@ useEffect(() => {
                 <img
                   src={friend.profilePic || '/default-avatar.png'}
                   alt={friend.name}
-                  style={{height: '60px'}}
+                  style={{height: '60px', width: '60px'}}
                   className="rounded-circle me-3"
                 />
                 <strong style={{fontSize: 'small'}}>{friend.name}</strong>

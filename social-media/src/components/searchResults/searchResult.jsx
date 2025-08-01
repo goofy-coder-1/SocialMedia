@@ -13,7 +13,6 @@ const SearchResults = () => {
   const [loading, setLoading] = useState(false);
   const [showAllComments, setShowAllComments] = useState({});
   const [requestedIds, setRequestedIds] = useState([]);
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const toggleCommentView = (postId) => {
     setShowAllComments((prevState) => ({
@@ -24,7 +23,7 @@ const SearchResults = () => {
 
   const sendFriendRequest = async (userId) => {
     try {
-      const res = await axios.post(`${BASE_URL}/api/friend-request/${userId}`, {}, {
+      const res = await axios.post(`http://localhost:4000/api/friend-request/${userId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -41,7 +40,7 @@ const SearchResults = () => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${BASE_URL}/api/usersprofile/search`, {
+        const res = await axios.get('http://localhost:4000/api/usersprofile/search', {
           params: { q: query },
           headers: { Authorization: `Bearer ${token}` },
         });

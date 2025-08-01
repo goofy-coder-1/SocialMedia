@@ -5,7 +5,6 @@ const sendFriendRequest = async (req, res) => {
     const targetUserId = req.params.userId;
     const senderId = req.userId;
 
-    // Prevent self-request
     if (senderId === targetUserId) {
       return res.status(400).json({ message: 'You cannot send a friend request to yourself.' });
     }
@@ -17,7 +16,6 @@ const sendFriendRequest = async (req, res) => {
       return res.status(404).json({ message: 'User not found.' });
     }
 
-    // ✅ Check if they are already friends
     if (
       targetUser.friends.includes(senderId) ||
       senderUser.friends.includes(targetUserId)
@@ -25,12 +23,10 @@ const sendFriendRequest = async (req, res) => {
       return res.status(400).json({ message: 'You are already friends.' });
     }
 
-    // ✅ Check if request already sent
     if (targetUser.friendRequests.includes(senderId)) {
       return res.status(400).json({ message: 'Friend request already sent.' });
     }
 
-    // ✅ Add request
     targetUser.friendRequests.push(senderId);
     await targetUser.save();
 

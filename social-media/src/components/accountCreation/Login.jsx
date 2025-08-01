@@ -12,7 +12,6 @@ const Login = () => {
   });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL; // <--- Use env variable here
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +24,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${BASE_URL}/api/users/login`, formData);
+      const res = await axios.post('http://localhost:4000/api/users/login', formData);
 
       // Save token in localStorage
       localStorage.setItem('token', res.data.token);
@@ -93,5 +92,4 @@ const Login = () => {
 };
 
 export default Login;
-
 
