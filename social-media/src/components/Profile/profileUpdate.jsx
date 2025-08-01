@@ -11,12 +11,12 @@ const ProfileUpdate = () => {
   const [bio, setBio] = useState(user?.bio || '');
   const [birthdate, setBirthdate] = useState(user?.birthdate?.split('T')[0] || '');
   const [profilePic, setProfilePic] = useState(null);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const token = localStorage.getItem('token');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const formData = new FormData();
     formData.append('username', username);
     formData.append('bio', bio);
@@ -40,13 +40,13 @@ const ProfileUpdate = () => {
       console.error('Profile update error:', error);
       alert('Profile update failed.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
   if (isLoading) {
     return (
-      <div className="container text-center mt-4">
+      <div className="container text-center mt-4 loading-screen">
         <div className="spinner-border text-primary" role="status" />
       </div>
     );

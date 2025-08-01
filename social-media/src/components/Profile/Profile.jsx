@@ -142,7 +142,7 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div className="container text-center mt-4">
+      <div className="container text-center mt-4 loading-screen">
         <div className="spinner-border text-primary" role="status" />
       </div>
     );

@@ -6,11 +6,12 @@ import { baseUrl } from '../../../url';
 
 const Inbox = () => {
   const [friends, setFriends] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
   const { refreshFriends } = useFriendContext();
 
   useEffect(() => {
+    setLoading(true)
     const fetchFriends = async () => {
       try {
         const res = await axios.get(`${baseUrl}/api/friends`, {

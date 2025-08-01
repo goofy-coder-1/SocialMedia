@@ -9,13 +9,13 @@ const PostForm = () => {
   const [photo, setPhoto] = useState(null);
   const [message, setMessage] = useState('');
   const { handlePostCreated } = useContext(PostContext);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   const token = localStorage.getItem('token');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true)
     if (!content.trim()) {
       return setMessage('Content is required');
     }
@@ -47,7 +47,7 @@ const PostForm = () => {
 
   if (isLoading) {
     return (
-      <div className="container text-center mt-4">
+      <div className="container text-center mt-4 loading-screen">
         <div className="spinner-border text-primary" role="status" />
       </div>
     );

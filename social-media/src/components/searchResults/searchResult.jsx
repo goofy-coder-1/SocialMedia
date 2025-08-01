@@ -23,6 +23,7 @@ const SearchResults = () => {
   };
 
   const sendFriendRequest = async (userId) => {
+    setLoading(true);
     try {
       const res = await axios.post(`${baseUrl}/api/friend-request/${userId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
@@ -32,12 +33,14 @@ const SearchResults = () => {
       setRequestedIds((prev) => [...prev, userId]);
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to send request');
+    } finally {
+      setLoading(false)
     }
   };
 
   useEffect(() => {
     if (!query) return;
-
+     setLoading(true);
     const fetchResults = async () => {
       setLoading(true);
       try {
