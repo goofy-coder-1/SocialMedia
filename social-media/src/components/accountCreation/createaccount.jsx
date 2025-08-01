@@ -53,7 +53,10 @@ const CenteredForm = () => {
       <div className="centered-overlay">
         <form className="centered-form" onSubmit={handleSubmit}>
           <h1>Create Account</h1>
-
+          <h5 style={{ color: 'white' }}>Already have an account?</h5>
+           <Link to="/login">
+              <h3 >Log In</h3>
+            </Link>
           <div className="form-row">
             <label>Full Name:</label>
             <input
@@ -105,14 +108,6 @@ const CenteredForm = () => {
           </div>
 
           <button type="submit">Register</button>
-
-          <h6 className="text-center" style={{ color: 'white' }}>Already have an account?</h6>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Link to="/login">
-              <button className="btn btn-danger">Log In</button>
-            </Link>
-          </div>
-
           {message && <p className="form-message">{message}</p>}
         </form>
       </div>

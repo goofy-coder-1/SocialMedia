@@ -151,8 +151,95 @@ const loginUser = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+    const sanitizedEmail = email?.toLowerCase().trim();
+
+    if (!sanitizedEmail || !newPassword) {
+      return res.status(400).json({ message: 'Email and new password are required' });
+    }
+
+    const user = await User.findOne({ email: sanitizedEmail });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found with this email' });
+    }
+
+    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    tempStore.set(sanitizedEmail, {
+      hashedPassword,
+      resetCode,
+      codeExpiresAt
+    });
+
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: sanitizedEmail,
+      subject: 'Password Reset Code',
+      text: `Your verification code is ${resetCode}. It expires in 30 minutes.`
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: 'Verification code sent to email' });
+  } catch (err) {
+    console.error(' Error initiating password reset:', err);
+    res.status(500).json({ message: 'Server error during password reset' });
+  }
+};
+
+
+const verifyResetCode = async (req, res) => {
+  try {
+    const { email, code } = req.body;
+    const sanitizedEmail = email?.toLowerCase().trim();
+    const stored = tempStore.get(sanitizedEmail);
+
+    if (!stored) {
+      return res.status(404).json({ message: 'No reset request found for this email' });
+    }
+
+    if (stored.codeExpiresAt < Date.now()) {
+      tempStore.delete(sanitizedEmail);
+      return res.status(400).json({ message: 'Code expired. Please try again.' });
+    }
+
+    if (String(stored.resetCode).trim() !== String(code).trim()) {
+      return res.status(400).json({ message: 'Invalid verification code' });
+    }
+
+    const user = await User.findOne({ email: sanitizedEmail });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.password = stored.hashedPassword;
+    await user.save();
+
+    tempStore.delete(sanitizedEmail);
+    res.status(200).json({ message: 'Password reset successful' });
+  } catch (err) {
+    console.error('Error verifying reset code:', err);
+    res.status(500).json({ message: 'Server error during code verification' });
+  }
+};
+
 module.exports = {
   requestVerificationCode,
   verifyEmailCode,
-  loginUser
+  loginUser,
+  changePassword,    
+  verifyResetCode     
 };

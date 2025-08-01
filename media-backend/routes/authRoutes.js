@@ -6,7 +6,9 @@ const { validationResult } = require('express-validator');
 const {
   requestVerificationCode,
   verifyEmailCode,
-  loginUser
+  loginUser,
+  changePassword,
+  verifyResetCode
 } = require('../controllers/authController');
 
 
@@ -30,5 +32,10 @@ router.post('/login', validateLoginUser, (req, res) => {
     }
     loginUser(req, res);
 });
+
+router.post('/change-password', changePassword);
+
+
+router.post('/verify-reset-code', verifyResetCode);
 
 module.exports = router;
