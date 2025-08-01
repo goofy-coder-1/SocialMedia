@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '/src/contextapi/usercontext.jsx';
 import '../accountCreation/createaccount.css';
+import { baseUrl } from '../../../url';
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
@@ -24,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/api/users/login', formData);
+      const res = await axios.post(`${baseUrl}/api/users/login`, formData);
 
       // Save token in localStorage
       localStorage.setItem('token', res.data.token);

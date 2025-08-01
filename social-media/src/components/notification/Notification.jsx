@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../notification/Notification.css';
+import { baseUrl } from '../../../url';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -11,7 +12,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const { data } = await axios.get('http://localhost:4000/api/pop/notifications', {
+        const { data } = await axios.get(`${baseUrl}/api/pop/notifications`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -30,7 +31,7 @@ const Notifications = () => {
   // ✅ Mark a notification as read
   const markAsRead = async (id) => {
     try {
-      await axios.patch(`http://localhost:4000/api/pop/notifications/${id}/read`, {}, {
+      await axios.patch(`${baseUrl}/api/pop/notifications/${id}/read`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -45,7 +46,7 @@ const Notifications = () => {
   // 🗑️ Delete a notification
   const deleteNotification = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/pop/notifications/${id}`, {
+      await axios.delete(`${baseUrl}/api/pop/notifications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

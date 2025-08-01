@@ -6,6 +6,7 @@ import { PostContext } from '/src/contextapi/postcontext.jsx';
 import { SlLike } from "react-icons/sl";
 import { useFriendContext } from '/src/contextapi/Friendcontext.jsx';
 import '../Home/Home.css';
+import { baseUrl } from '../../../url';
 
 const Home = () => {
   const { posts, setPosts, handlePostCreated } = useContext(PostContext);
@@ -21,7 +22,7 @@ const Home = () => {
 useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/friends', {
+        const res = await axios.get(`${baseUrl}/api/friends`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -55,7 +56,7 @@ useEffect(() => {
  
   const loadContent = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/api/postsapi/getposts', {
+      const res = await axios.get(`${baseUrl}http://localhost:4000/api/postsapi/getposts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data.posts || []);
@@ -98,7 +99,7 @@ useEffect(() => {
   const handleLike = async (postId) => {
     try {
       await axios.put(
-        `http://localhost:4000/api/postsapi/posts/${postId}/like`,
+        `${baseUrl}/api/postsapi/posts/${postId}/like`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -116,7 +117,7 @@ useEffect(() => {
 
     try {
       await axios.post(
-        `http://localhost:4000/api/postsapi/posts/${postId}/comment`,
+        `${baseUrl}/api/postsapi/posts/${postId}/comment`,
         { text },
         {
           headers: { Authorization: `Bearer ${token}` },

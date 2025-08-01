@@ -1,0 +1,1 @@
+export const baseUrl = `https://social-media-y4in.onrender.com`

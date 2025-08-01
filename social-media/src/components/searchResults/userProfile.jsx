@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../searchResults/search.css';
+import { baseUrl } from '../../../url';
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/usersprofile/profile/${id}`);
+        const res = await axios.get(`${baseUrl}/api/usersprofile/profile/${id}`);
         setUser(res.data.user);
         setPosts(res.data.posts);
       } catch (error) {

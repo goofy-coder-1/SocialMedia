@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { PostContext } from '/src/contextapi/postcontext.jsx';
 import '../PostForm/PostForm.css'
+import { baseUrl } from '../../../url';
 
 const PostForm = () => {
   const [content, setContent] = useState('');
@@ -23,7 +24,7 @@ const PostForm = () => {
     if (photo) formData.append('photo', photo);
 
     try {
-      const res = await axios.post('http://localhost:4000/api/postsapi/posts', formData, {
+      const res = await axios.post(`${baseUrl}/api/postsapi/posts`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

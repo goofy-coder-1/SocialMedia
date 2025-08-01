@@ -5,6 +5,7 @@ import { UserContext } from '../../contextapi/usercontext';
 import { Link } from 'react-router-dom';
 import { SlLike } from "react-icons/sl";
 import { FiMoreVertical } from "react-icons/fi";
+import { baseUrl } from '../../../url';
 
 const Profile = () => {
   const [userPosts, setUserPosts] = useState([]);
@@ -39,7 +40,7 @@ const Profile = () => {
 
   const loadProfileData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/usersprofile/profile/me', {
+      const response = await axios.get(`${baseUrl}/api/usersprofile/profile/me`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setUser(response.data.user);
@@ -56,7 +57,7 @@ const Profile = () => {
   const handleLike = async (postId) => {
     try {
       await axios.put(
-        `http://localhost:4000/api/postsapi/posts/${postId}/like`,
+        `${baseUrl}/api/postsapi/posts/${postId}/like`,
         {},
         {
           headers: { Authorization: `Bearer ${authToken}` },
@@ -74,7 +75,7 @@ const Profile = () => {
 
     try {
       await axios.post(
-        `http://localhost:4000/api/postsapi/posts/${postId}/comment`,
+        `${baseUrl}/api/postsapi/posts/${postId}/comment`,
         { text },
         {
           headers: { Authorization: `Bearer ${authToken}` },
@@ -100,7 +101,7 @@ const Profile = () => {
       if (editPhoto) formData.append('photo', editPhoto);
 
       await axios.put(
-        `http://localhost:4000/api/postsapi/posts/${editingPost._id}`,
+        `${baseUrl}/api/postsapi/posts/${editingPost._id}`,
         formData,
         {
           headers: {
@@ -122,7 +123,7 @@ const Profile = () => {
 
     try {
       await axios.delete(
-        `http://localhost:4000/api/postsapi/posts/${postId}`,
+        `${baseUrl}/api/postsapi/posts/${postId}`,
         {
           headers: { Authorization: `Bearer ${authToken}` },
         }

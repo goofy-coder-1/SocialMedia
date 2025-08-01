@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useFriendContext } from '/src/contextapi/Friendcontext.jsx';
 import '/src/components/Inbox/inbox.css';
+import { baseUrl } from '../../../url';
 
 const Inbox = () => {
   const [friends, setFriends] = useState([]);
@@ -12,7 +13,7 @@ const Inbox = () => {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/friends', {
+        const res = await axios.get(`${baseUrl}/api/friends`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

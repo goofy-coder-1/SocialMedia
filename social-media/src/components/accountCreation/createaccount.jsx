@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../accountCreation/createaccount.css';
+import '../../../url.js'
 
 const CenteredForm = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const CenteredForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/users/request-code', formData);
+      await axios.post(`${baseUrl}/api/users/request-code`, formData);
       localStorage.setItem('pendingEmail', formData.email);
       navigate('/code');
     } catch (err) {

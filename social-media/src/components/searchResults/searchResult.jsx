@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { baseUrl } from '../../../url';
 
 const SearchResults = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const SearchResults = () => {
 
   const sendFriendRequest = async (userId) => {
     try {
-      const res = await axios.post(`http://localhost:4000/api/friend-request/${userId}`, {}, {
+      const res = await axios.post(`${baseUrl}/api/friend-request/${userId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -40,7 +41,7 @@ const SearchResults = () => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        const res = await axios.get('http://localhost:4000/api/usersprofile/search', {
+        const res = await axios.get(`${baseUrl}}/api/usersprofile/search`, {
           params: { q: query },
           headers: { Authorization: `Bearer ${token}` },
         });

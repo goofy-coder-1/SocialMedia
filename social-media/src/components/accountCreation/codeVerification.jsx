@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../accountCreation/createaccount.css';
+import { baseUrl } from '../../../url';
 
 const CodeVerification = () => {
   const [code, setCode] = useState('');
@@ -12,7 +13,7 @@ const CodeVerification = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/users/verify-code', { email, code });
+      await axios.post(`${baseUrl}/api/users/verify-code`, { email, code });
       setMessage('Account created successfully!');
       localStorage.removeItem('pendingEmail');
       setTimeout(() => navigate('/login'), 2000);
