@@ -86,12 +86,14 @@
 }
 
 .loading-screen {
-  position: fixed;      
+  position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.4);   
-  backdrop-filter: blur(3px);       
-  z-index: 9999;      
+  background-color: rgba(0, 0, 0, 0.3); /* ⬅️ Slightly transparent black overlay */
+  backdrop-filter: blur(4px);          /* ⬅️ Stronger blur for glass effect */
+  -webkit-backdrop-filter: blur(4px);  /* ⬅️ Support for Safari */
+  z-index: 9999;
 }
+
