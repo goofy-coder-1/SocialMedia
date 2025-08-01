@@ -33,7 +33,7 @@ const Inbox = () => {
 
   if (loading) {
     return (
-      <div className="inbox-container text-center mt-4">
+      <div className="inbox-container text-center mt-4 loading-screen">
         <div className="spinner-border text-primary" role="status" />
       </div>
     );

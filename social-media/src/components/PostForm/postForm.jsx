@@ -47,7 +47,7 @@ const PostForm = () => {
 
   if (isLoading) {
     return (
-      <div className="container text-center mt-4 loading-screen">
+      <div className="loading-screen">Loading...
         <div className="spinner-border text-primary" role="status" />
       </div>
     );
