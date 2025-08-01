@@ -5,6 +5,7 @@ import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url';
 
 const CodeVerification = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [code, setCode] = useState('');
   const [message, setMessage] = useState('');
   const email = localStorage.getItem('pendingEmail');
@@ -20,7 +21,18 @@ const CodeVerification = () => {
     } catch (err) {
       setMessage(err.response?.data?.message || 'Verification failed.');
     }
+    finally {
+      setIsLoading(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="container text-center mt-4">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
 
   return (
     <div className="centered-background">

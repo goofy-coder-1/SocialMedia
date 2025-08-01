@@ -11,6 +11,7 @@ const ProfileUpdate = () => {
   const [bio, setBio] = useState(user?.bio || '');
   const [birthdate, setBirthdate] = useState(user?.birthdate?.split('T')[0] || '');
   const [profilePic, setProfilePic] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
   const token = localStorage.getItem('token');
 
   const handleSubmit = async (e) => {
@@ -38,9 +39,18 @@ const ProfileUpdate = () => {
     } catch (error) {
       console.error('Profile update error:', error);
       alert('Profile update failed.');
+    } finally {
+      setIsLoading(false)
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="container text-center mt-4">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
   return (
     <form onSubmit={handleSubmit} className="profile-update-form">
       <label>Call me:</label>

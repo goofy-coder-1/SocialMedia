@@ -5,6 +5,7 @@ import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url.js'
 
 const CenteredForm = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -34,8 +35,18 @@ const CenteredForm = () => {
       console.error('Registration error:', err.message);
       setMessage(err.response?.data?.message || 'Something went wrong.');
     }
+    finally {
+      setIsLoading(false);
+    }
   };
 
+  if (isLoading) {
+    return (
+      <div className="container text-center mt-4">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
   return (
     <div className="centered-background">
       <div className="centered-overlay">

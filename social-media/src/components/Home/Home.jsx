@@ -39,6 +39,14 @@ useEffect(() => {
     fetchFriends();
   }, [refreshFriends]);
 
+  if (loading) {
+    return (
+      <div className="container text-center mt-4">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
+
   const toggleCommentView = (postId) => {
   setShowAllComments((prev) => ({
     ...prev,

@@ -15,6 +15,7 @@ const Profile = () => {
   const [editContent, setEditContent] = useState('');
   const [editPhoto, setEditPhoto] = useState(null);
   const [openMenuPostId, setOpenMenuPostId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
   const menuRef = useRef(null);
 
   const { user, setUser } = useContext(UserContext);
@@ -47,6 +48,9 @@ const Profile = () => {
       setUserPosts(response.data.posts);
     } catch (error) {
       console.error('Failed to load profile:', error);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -131,8 +135,18 @@ const Profile = () => {
       loadProfileData();
     } catch (err) {
       console.error('Failed to delete post:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="container text-center mt-4">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
 
   const toggleMenu = (postId) => {
     setOpenMenuPostId(prev => (prev === postId ? null : postId));

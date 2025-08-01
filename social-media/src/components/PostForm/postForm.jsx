@@ -9,6 +9,7 @@ const PostForm = () => {
   const [photo, setPhoto] = useState(null);
   const [message, setMessage] = useState('');
   const { handlePostCreated } = useContext(PostContext);
+  const [isLoading, setIsLoading] = useState(true)
 
   const token = localStorage.getItem('token');
 
@@ -39,7 +40,18 @@ const PostForm = () => {
       console.error(err);
       setMessage('Failed to create post');
     }
+    finally {
+      setIsLoading(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="container text-center mt-4">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>

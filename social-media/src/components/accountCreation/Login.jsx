@@ -7,6 +7,7 @@ import { baseUrl } from '../../../url';
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -41,7 +42,17 @@ const Login = () => {
       console.error('Login error:', err.message);
       setMessage(err.response?.data?.message || 'Login failed.');
     }
+    finally {
+      setIsLoading(false);
+    }
   };
+   if (isLoading) {
+    return (
+      <div className="container text-center mt-4">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
 
   return (
     <div className="centered-background">
