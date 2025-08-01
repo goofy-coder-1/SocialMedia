@@ -5,7 +5,7 @@ import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url.js'
 
 const CenteredForm = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,6 +27,7 @@ const CenteredForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await axios.post(`${baseUrl}/api/users/request-code`, formData);
       localStorage.setItem('pendingEmail', formData.email);
@@ -42,7 +43,7 @@ const CenteredForm = () => {
 
   if (isLoading) {
     return (
-      <div className="container text-center mt-4">
+      <div className="container text-center mt-4 loading-screen">
         <div className="spinner-border text-primary" role="status" />
       </div>
     );

@@ -20,6 +20,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   
 useEffect(() => {
+   setLoading(true);
     const fetchFriends = async () => {
       try {
         const res = await axios.get(`${baseUrl}/api/friends`, {
@@ -52,7 +53,6 @@ useEffect(() => {
       fetchBlogs();
     }
   }, [location.pathname]);
-
  
   const loadContent = async () => {
     try {

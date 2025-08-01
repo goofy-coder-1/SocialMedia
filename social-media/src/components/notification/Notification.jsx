@@ -68,13 +68,14 @@ const Notifications = () => {
   };
 
   // 🕒 Show loading spinner
-  if (isLoading) {
-    return (
-      <div className="container text-center mt-4">
-        <div className="spinner-border text-primary" role="status" />
-      </div>
-    );
-  }
+ if (isLoading) {
+  return (
+    <div className="loading-screen">
+      <div className="spinner-border text-primary" role="status" />
+    </div>
+  );
+}
+
 
   return (
     <div className="container-fluid notification-here">

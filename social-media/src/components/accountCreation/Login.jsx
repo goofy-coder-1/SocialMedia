@@ -7,7 +7,7 @@ import { baseUrl } from '../../../url';
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -25,6 +25,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const res = await axios.post(`${baseUrl}/api/users/login`, formData);
 
@@ -48,7 +49,7 @@ const Login = () => {
   };
    if (isLoading) {
     return (
-      <div className="container text-center mt-4">
+      <div className="container text-center mt-4 loading-screen">
         <div className="spinner-border text-primary" role="status" />
       </div>
     );

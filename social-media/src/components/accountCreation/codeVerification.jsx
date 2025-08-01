@@ -5,7 +5,7 @@ import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url';
 
 const CodeVerification = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState('');
   const [message, setMessage] = useState('');
   const email = localStorage.getItem('pendingEmail');
@@ -13,6 +13,7 @@ const CodeVerification = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await axios.post(`${baseUrl}/api/users/verify-code`, { email, code });
       setMessage('Account created successfully!');
@@ -28,7 +29,7 @@ const CodeVerification = () => {
 
   if (isLoading) {
     return (
-      <div className="container text-center mt-4">
+      <div className="container text-center mt-4 loading-screen">
         <div className="spinner-border text-primary" role="status" />
       </div>
     );
