@@ -196,11 +196,9 @@ const Profile = () => {
                   src={post.author?.profilePic || '/default-avatar.png'}
                   alt="author"
                   style={{
-                    position: 'relative',  // ✅ Needed for absolute menu positioning
-                    overflow: 'visible',   // ✅ Ensures dropdown is visible outside
-                    zIndex: 1,
-                    width: '50px',
-                    height: '50px',
+                    position: 'relative',
+                    width: '60px',
+                    height: '60px',
                     borderRadius: '50%',
                     objectFit: 'cover',
                     marginRight: '12px',

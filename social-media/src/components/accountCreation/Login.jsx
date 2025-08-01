@@ -75,7 +75,7 @@ const Login = () => {
 
           <div className="form-row">
             <label>Password:</label>
-            <input
+          &nbsp;<input
               type="password"
               name="password"
               required
