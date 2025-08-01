@@ -91,9 +91,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.3); /* ⬅️ Slightly transparent black overlay */
-  backdrop-filter: blur(4px);          /* ⬅️ Stronger blur for glass effect */
-  -webkit-backdrop-filter: blur(4px);  /* ⬅️ Support for Safari */
+  backdrop-filter: blur(4px);        
+  -webkit-backdrop-filter: blur(4px);  
   z-index: 9999;
 }
 
