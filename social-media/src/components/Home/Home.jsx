@@ -134,11 +134,11 @@ useEffect(() => {
     <div className="home-wrapper">
       {/* Left Sidebar for simple controls*/}
       <div className="sidebar">
-        <ul>
+        <ul style={{padding: '20px'}}>
           <li style={{fontSize: '20px'}}>🔖 Bookmarks</li>
-          <Link to='/requests'><li className='lists'>Requests</li></Link>
-          <Link to='/notifications'><li className='lists'>🕓 History</li></Link>
-          <Link to='/sendcode'> <li className='lists'>⚙️ Settings</li></Link>
+          <Link to='/requests' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Requests</li></Link>
+          <Link to='/notifications' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>🕓 History</li></Link>
+          <Link to='/sendcode' style={{color: 'inherit', textDecoration:'none'}}> <li className='lists'>⚙️ Settings</li></Link>
           <Link to='/profile' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>👤 Profile</li></Link>
         </ul>
       </div>

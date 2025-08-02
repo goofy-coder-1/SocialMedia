@@ -152,7 +152,7 @@ const Profile = () => {
     setOpenMenuPostId(prev => (prev === postId ? null : postId));
   };
 
-  if (!user) return <p>Loading profile details...<br />Make sure to log in</p>;
+  if (!user) return <div style={{display:'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}><h4>Loading profile details...<br />Make sure to log in</h4><br/><Link to='/login'><h2>LOG IN</h2></Link></div>;
 
   return (
     <div className="profile-container">
