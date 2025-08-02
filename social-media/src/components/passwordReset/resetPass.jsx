@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../../url';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const ResetPassword = () => {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('/api/users/change-password', { email, newPassword });
+      await axios.post(`${baseUrl}/api/users/change-password`, { email, newPassword });
       localStorage.setItem('resetEmail', email); // temporarily store for context
       navigate('/verify-code');
     } catch (err) {

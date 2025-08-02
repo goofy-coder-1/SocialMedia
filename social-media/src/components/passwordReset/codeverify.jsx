@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../../url';
 
 const VerifyCode = () => {
   const [code, setCode] = useState('');
@@ -18,7 +19,7 @@ const VerifyCode = () => {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('/api/users/verify-code', { code });
+      await axios.post(`${baseUrl}/api/users/verify-code`, { code });
       localStorage.removeItem('resetEmail');
       navigate('/login');
     } catch (err) {
