@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url.js'
+import { toast } from 'react-toastify';
 
 const CenteredForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,9 +33,11 @@ const CenteredForm = () => {
       await axios.post(`${baseUrl}/api/users/request-code`, formData);
       localStorage.setItem('pendingEmail', formData.email);
       navigate('/code');
+      toast.success('Registration successful! Please check your email for the verification code.');
     } catch (err) {
       console.error('Registration error:', err.message);
       setMessage(err.response?.data?.message || 'Something went wrong.');
+      toast.error(err.response?.data?.message || 'Registration failed.');
     }
     finally {
       setIsLoading(false);

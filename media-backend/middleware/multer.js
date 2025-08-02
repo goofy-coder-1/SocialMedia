@@ -1,6 +1,6 @@
-// middleware/multer.js
+
 const multer = require('multer');
-const { storage } = require('../configure/cloudinary'); // ✅ correct import path
+const { storage } = require('../configure/cloudinary'); 
 
 const upload = multer({ storage });
 

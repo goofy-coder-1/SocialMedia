@@ -1,7 +1,6 @@
 const User = require('../models/userModel');
 const Post = require('../models/postModel');
 
-// Retrieve a user's profile along with their posts
 const getProfile = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -20,7 +19,7 @@ const getProfile = async (req, res) => {
   }
 };
 
-// Update user profile fields, optionally including a profile image
+
 const updateProfile = async (req, res) => {
   try {
     const { username, bio, birthdate } = req.body;

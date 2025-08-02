@@ -6,7 +6,7 @@ const { getProfile, updateProfile } = require('../controllers/profileController'
 const { verifyToken } = require('../middleware/authMiddleware');
 const upload = require('../middleware/multer');
 
-// Update user profile with optional profile picture upload (secured route)
+// Update user profile
 router.put('/profile/update', verifyToken, upload.single('profilePic'), updateProfile);
 
 // Get logged-in user's profile and their posts with populated author and comments
@@ -15,7 +15,6 @@ router.get('/profile/me', verifyToken, async (req, res) => {
     // Fetch user excluding password field
     const user = await User.findById(req.userId).select('-password');
 
-    // Fetch posts authored by the user, newest first, with author and comment authors populated
     const posts = await Post.find({ author: req.userId })
       .sort({ createdAt: -1 })
       .populate('author', 'name profilePic')
@@ -31,7 +30,6 @@ router.get('/profile/me', verifyToken, async (req, res) => {
   }
 });
 
-// Search users and posts based on a query string (secured route)
 router.get('/search', verifyToken, async (req, res) => {
   try {
     const query = req.query.q?.trim();
@@ -39,12 +37,12 @@ router.get('/search', verifyToken, async (req, res) => {
       return res.status(400).json({ message: 'Missing query parameter' });
     }
 
-    // Find users matching the query (case-insensitive) returning limited fields
+    // Find users 
     const users = await User.find({
       name: { $regex: query, $options: 'i' }
     }).select('name profilePic bio');
 
-    // Find posts matching the query with populated authors and comments
+    // Find posts 
     const posts = await Post.find({
       content: { $regex: query, $options: 'i' }
     })

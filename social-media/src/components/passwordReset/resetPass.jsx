@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url';
+import { toast } from 'react-toastify';
 
 const ResetPassword = () => {
   const [formData, setFormData] = useState({ email: '', newPassword: '' });
@@ -25,10 +26,11 @@ const ResetPassword = () => {
       });
       // Save email locally for verification step
       localStorage.setItem('resetEmail', formData.email);
-      setMessage('Verification code sent to your email.');
       navigate('/verifycodepass');
+      toast.success('code sent to your email');
     } catch (err) {
       setMessage(err.response?.data?.message || 'Failed to send verification code.');
+      toast.error('error sending code');
     } finally {
       setIsLoading(false);
     }

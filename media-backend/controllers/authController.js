@@ -148,7 +148,7 @@ const changePassword = async (req, res) => {
     const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Store under scoped key to avoid conflicts with other email uses
+   //temp store of password email
     tempStore.set(`reset-${sanitizedEmail}`, {
       hashedPassword,
       resetCode,
@@ -178,7 +178,6 @@ const changePassword = async (req, res) => {
   }
 };
 
-// ✅ Step 2: Verify Code Only (NO Email or Password Needed Now)
 const verifyResetCode = async (req, res) => {
   try {
     const { code } = req.body;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url';
+import { toast } from 'react-toastify';
 
 const CodeVerification = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +20,10 @@ const CodeVerification = () => {
       setMessage('Account created successfully!');
       localStorage.removeItem('pendingEmail');
       setTimeout(() => navigate('/login'), 2000);
+      toast.success('verify code successful');
     } catch (err) {
       setMessage(err.response?.data?.message || 'Verification failed.');
+      toast.error('code verification failed');
     }
     finally {
       setIsLoading(false);

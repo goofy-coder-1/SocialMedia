@@ -4,6 +4,7 @@ import axios from 'axios';
 import { UserContext } from '/src/contextapi/usercontext.jsx';
 import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
@@ -37,17 +38,18 @@ const Login = () => {
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
       }
-
       navigate('/profile');
+      toast.success('Login successful!');
     } catch (err) {
       console.error('Login error:', err.message);
       setMessage(err.response?.data?.message || 'Login failed.');
-    }
-    finally {
+      toast.error(err.response?.data?.message || 'Login failed.');
+    } finally {
       setIsLoading(false);
     }
   };
-   if (isLoading) {
+
+  if (isLoading) {
     return (
       <div className="loading-screen">
         <div className="spinner-border text-primary" role="status" />
@@ -75,7 +77,8 @@ const Login = () => {
 
           <div className="form-row">
             <label>Password:</label>
-          &nbsp;<input
+            &nbsp;
+            <input
               type="password"
               name="password"
               required
@@ -96,7 +99,11 @@ const Login = () => {
               <button className="btn btn-primary">Create Account</button>
             </Link>
           </div>
-         <Link to='/sendcode'><h5 style={{ display: 'flex', justifyContent: 'center' }}>Forgot Password??</h5></Link>
+          <Link to="/sendcode">
+            <h5 style={{ display: 'flex', justifyContent: 'center' }}>
+              Forgot Password??
+            </h5>
+          </Link>
           {message && <p className="form-message">{message}</p>}
         </form>
       </div>
@@ -105,4 +112,5 @@ const Login = () => {
 };
 
 export default Login;
+
 

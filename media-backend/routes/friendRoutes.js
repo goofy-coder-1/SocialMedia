@@ -11,14 +11,14 @@ router.delete('/friend-requests/delete/:userId', verifyToken, deleteRequest);
 
 router.get('/friends', verifyToken, async (req, res) => {
   try {
-    console.log('User ID from token:', req.userId);  // ✅ Check if this is set
+    console.log('User ID from token:', req.userId);  
     const user = await User.findById(req.userId).populate('friends', 'name profilePic');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     res.status(200).json(user.friends);
   } catch (err) {
-    console.error('❌ Error in /api/friends route:', err); // ✅ Log full error
+    console.error('❌ Error in /api/friends route:', err); 
     res.status(500).json({ message: 'Error fetching friends', error: err.message });
   }
 });

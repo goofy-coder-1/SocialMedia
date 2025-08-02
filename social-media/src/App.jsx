@@ -18,6 +18,8 @@ import Inbox from './components/Inbox/Inbox.jsx';
 import { FriendProvider } from './contextapi/Friendcontext.jsx';
 import ResetPass from './components/passwordReset/resetPass.jsx';
 import CodeVerifyPass from './components/passwordReset/codeverify.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -28,6 +30,16 @@ const App = () => {
         <PostProvider>
           <FriendProvider>
           <NavBar />
+
+              <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              theme="colored"
+            />
 
           <Routes>
             <Route path="/" element={<Home />} />

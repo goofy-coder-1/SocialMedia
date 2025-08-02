@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url';
+import { toast } from 'react-toastify';
 
 const VerifyCode = () => {
   const [code, setCode] = useState('');
@@ -19,8 +20,10 @@ const VerifyCode = () => {
       setMessage('Password reset successful! Redirecting to login...');
       localStorage.removeItem('resetEmail');
       setTimeout(() => navigate('/login'), 2000);
+      toast.success('code verification successful')
     } catch (err) {
       setMessage(err.response?.data?.message || 'Invalid or expired code.');
+      toast.error('code invalid or expired')
     } finally {
       setIsLoading(false);
     }

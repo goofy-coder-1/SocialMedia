@@ -1,10 +1,10 @@
 const Notification = require('../models/notificationModal');
 
-// 1️⃣ Get All Notifications for Logged-in User
+
 const getNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({ recipient: req.userId })
-      .populate('sender', 'name profilePic') // optional for frontend display
+      .populate('sender', 'name profilePic') 
       .sort({ createdAt: -1 });
 
     res.json(notifications);
@@ -13,7 +13,7 @@ const getNotifications = async (req, res) => {
   }
 };
 
-// 2️⃣ Mark Notification as Read
+//  Mark Notification as Read
 const markNotificationAsRead = async (req, res) => {
   try {
     await Notification.findByIdAndUpdate(req.params.id, { isRead: true });
@@ -23,7 +23,7 @@ const markNotificationAsRead = async (req, res) => {
   }
 };
 
-// 3️⃣ Delete a Notification
+//  Delete a Notification
 const deleteNotification = async (req, res) => {
   try {
     await Notification.findByIdAndDelete(req.params.id);
@@ -33,7 +33,7 @@ const deleteNotification = async (req, res) => {
   }
 };
 
-// Make sure to export them all
+
 module.exports = {
   getNotifications,
   markNotificationAsRead,

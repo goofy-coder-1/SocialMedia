@@ -48,7 +48,7 @@ const likePost = async (req, res) => {
     } else {
       post.likes.push(req.userId);
 
-      // 🔔 Only create notification if someone else liked the post
+      // Only create notification if someone else liked the post
       if (req.userId !== post.author.toString()) {
         const notification = new Notification({
           recipient: post.author,
@@ -81,7 +81,7 @@ const addComment = async (req, res) => {
     const comment = { text, author: req.userId };
     post.comments.push(comment);
 
-    // 🔔 Notify post author if someone else commented
+    //  Notify post author if someone else commented
     if (req.userId !== post.author.toString()) {
       const notification = new Notification({
         recipient: post.author,
@@ -154,21 +154,27 @@ const editComment = async (req, res) => {
 const deleteComment = async (req, res) => {
   try {
     const { postId, commentId } = req.params;
+    
     const post = await Post.findById(postId);
-    const comment = post?.comments.id(commentId);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+    
+    const comment = post.comments.id(commentId);
+    if (!comment) return res.status(404).json({ message: 'Comment not found' });
 
-    if (!comment || comment.author.toString() !== req.userId)
+    if (comment.author.toString() !== req.userId) {
       return res.status(403).json({ message: 'Unauthorized' });
+    }
 
     comment.remove();
     await post.save();
+
     res.json({ message: 'Comment deleted' });
   } catch (err) {
+    console.error('Delete comment error:', err);
     res.status(500).json({ message: 'Delete comment failed' });
   }
 };
 
-// Export all controller functions
 module.exports = {
   createPost,
   getPosts,

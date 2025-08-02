@@ -13,7 +13,13 @@ const {
 
 
 // code for verification via email
-router.post('/request-code', requestVerificationCode);
+router.post('/request-code', validateRegisterUser, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  requestVerificationCode(req, res);
+});
 
 //code verification
 router.post('/verify-code',validateVerifyCode, (req, res) => {

@@ -18,7 +18,46 @@ const Home = () => {
   const [friends, setFriends] = useState([])
   const { refreshFriends } = useFriendContext();
   const [loading, setLoading] = useState(true);
+const [editingCommentId, setEditingCommentId] = useState(null);
+const [editedCommentText, setEditedCommentText] = useState('');
+const [openMenuForCommentId, setOpenMenuForCommentId] = useState(null);
+
+
   
+  const handleEditComment = async (postId, commentId) => {
+  try {
+    await axios.put(
+      `${baseUrl}/api/postsapi/posts/${postId}/comments/${commentId}`,
+      { text: editedCommentText },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    setEditingCommentId(null);
+    setEditedCommentText('');
+    loadContent(); // Refresh posts
+  } catch (err) {
+    console.error('Error editing comment:', err);
+  }
+};
+
+const handleDeleteComment = async (postId, commentId) => {
+  if (!window.confirm('Are you sure you want to delete this comment?')) return;
+  try {
+     await axios.delete(
+      `${baseUrl}/api/postsapi/posts/${postId}/comments/${commentId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    console.log("Comment deleted:", res.data);
+    loadContent();
+  } catch (err) {
+    console.error("Delete error:", err.response?.data || err.message);
+  }
+};
+
+
 useEffect(() => {
    setLoading(true);
     const fetchFriends = async () => {
@@ -229,39 +268,109 @@ useEffect(() => {
 
               {/* Comments List */}
               <div className="comments-list" style={{ marginTop: '16px' }}>
-  {(showAllComments[post._id] ? post.comments : post.comments.slice(0, 1)).map((comment, index) => (
-    <div key={index} className="comment" style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
-      <img
-        src={comment.author?.profilePic || '/default-avatar.png'}
-        style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%',
-          objectFit: 'cover',
-          marginRight: '10px',
-          marginTop: '4px',
-        }}
-      />
-      <div>
-        <span style={{ fontWeight: '600', fontSize: '0.9rem', marginRight: '6px' }}>
-          {comment.author?.name || 'Unknown'}
-        </span>
-        <p style={{ margin: '4px 0' }}>{comment.text}</p>
-        <small style={{ fontSize: '0.8rem', color: '#555' }}>
-          {comment.createdAt ? new Date(comment.createdAt).toLocaleString() : ''}
-        </small>
-      </div>
-    </div>
-  ))}
+{(showAllComments[post._id] ? post.comments : post.comments.slice(0, 1)).map((comment, index) => (
+  <div key={index} className="comment" style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px', position: 'relative' }}>
+    <img
+      src={comment.author?.profilePic || '/default-avatar.png'}
+      style={{
+        width: '32px',
+        height: '32px',
+        borderRadius: '50%',
+        objectFit: 'cover',
+        marginRight: '10px',
+        marginTop: '4px',
+      }}
+    />
+    <div style={{ flex: 1 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>{comment.author?.name || 'Unknown'}</span>
 
-  {post.comments.length > 2 && (
-    <button
-      className="btn btn-link btn-sm"
-      onClick={() => toggleCommentView(post._id)}
-    >
-      {showAllComments[post._id] ? 'Hide Comments' : 'View All Comments'}
-    </button>
-  )}
+        {/* Three dots menu (only for current user) */}
+        {comment.author?._id === JSON.parse(localStorage.getItem('user'))._id && (
+          <div style={{ position: 'relative' }}>
+            <button
+              onClick={() => setOpenMenuForCommentId(openMenuForCommentId === comment._id ? null : comment._id)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '20px',
+              }}
+            >
+              ⋯
+            </button>
+
+            {openMenuForCommentId === comment._id && (
+              <div style={{
+                position: 'absolute',
+                right: 0,
+                background: 'white',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                padding: '5px',
+                zIndex: 100,
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+              }}>
+                <div
+                  style={{ cursor: 'pointer', padding: '4px 8px' }}
+                  onClick={() => {
+                    setEditingCommentId(comment._id);
+                    setEditedCommentText(comment.text);
+                    setOpenMenuForCommentId(null);
+                  }}
+                >
+                   Edit
+                </div>
+                <div
+                  style={{ cursor: 'pointer', padding: '4px 8px', color: 'red' }}
+                  onClick={() => {
+                    handleDeleteComment(post._id, comment._id);
+                    setOpenMenuForCommentId(null);
+                  }}
+                >
+                  Delete
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Editable or normal view */}
+      {editingCommentId === comment._id ? (
+        <>
+          <input
+            type="text"
+            value={editedCommentText}
+            onChange={(e) => setEditedCommentText(e.target.value)}
+            style={{ width: '100%', margin: '4px 0', padding: '4px' }}
+          />
+          <div style={{ marginTop: '4px' }}>
+            <button onClick={() => handleEditComment(post._id, comment._id)} style={{ marginRight: '8px' }}>Save</button>
+            <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p style={{ margin: '4px 0' }}>{comment.text}</p>
+          <small style={{ fontSize: '0.8rem', color: '#555' }}>
+            {comment.createdAt ? new Date(comment.createdAt).toLocaleString() : ''}
+          </small>
+        </>
+      )}
+    </div>
+  </div>
+))}
+
+{post.comments.length > 1 && (
+  <button
+    className="btn btn-link btn-sm"
+    onClick={() => toggleCommentView(post._id)}
+  >
+    {showAllComments[post._id] ? 'Hide Comments' : 'View All Comments'}
+  </button>
+)}
+
 </div>
             </div>
           ))
