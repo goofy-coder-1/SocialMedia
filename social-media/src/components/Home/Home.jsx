@@ -137,7 +137,6 @@ useEffect(() => {
         <ul style={{padding: '20px'}}>
           <li style={{fontSize: '20px'}}>🔖 Bookmarks</li>
           <Link to='/requests' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Requests</li></Link>
-          <Link to='/notifications' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>🕓 History</li></Link>
           <Link to='/sendcode' style={{color: 'inherit', textDecoration:'none'}}> <li className='lists'>⚙️ Settings</li></Link>
           <Link to='/profile' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>👤 Profile</li></Link>
         </ul>

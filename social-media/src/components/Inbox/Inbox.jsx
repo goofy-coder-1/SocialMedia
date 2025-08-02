@@ -11,8 +11,8 @@ const Inbox = () => {
   const { refreshFriends } = useFriendContext();
 
   useEffect(() => {
-    setLoading(true)
     const fetchFriends = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(`${baseUrl}/api/friends`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -27,7 +27,6 @@ const Inbox = () => {
       }
     };
 
-    setLoading(true); // Show spinner while re-fetching
     fetchFriends();
   }, [refreshFriends]);
 
@@ -42,34 +41,30 @@ const Inbox = () => {
   return (
     <div className="inbox-container">
       {friends.length === 0 ? (
-        <div className="alert alert-secondary mt-3">No friends to message yet.</div>
+        <div className="alert alert-secondary mt-3">
+          No friends to message yet.
+        </div>
       ) : (
         <div className="inbox-list">
           <ul className="list-group">
             {friends.map((friend) => (
               <li
-              style={{display: 'flex', justifyContent: 'space-between'}}
                 key={friend._id}
-                className="list-group-item d-flex align-items-center"
+                className="list-group-item"
                 onClick={() => console.log(`Open chat with ${friend.name}`)}
               >
-                <div>
-                <img
-                  src={friend.profilePic || '/default-avatar.png'}
-                  alt={friend.name}
-                  className="rounded-circle me-3"
-                />
-                <strong>{friend.name}</strong>
+                <div className="friend-info">
+                  <img
+                    src={friend.profilePic || '/default-avatar.png'}
+                    alt={friend.name}
+                    className="inbox-image"
+                  />
+                  <strong className="friend-name">{friend.name}</strong>
                 </div>
-                <div>
-                <button className='btn btn-primary'>Message</button>
-                </div>
+                <button className="btn btn-primary">Message</button>
               </li>
-              
             ))}
-           
           </ul>
-          
         </div>
       )}
     </div>
@@ -77,4 +72,5 @@ const Inbox = () => {
 };
 
 export default Inbox;
+
 
