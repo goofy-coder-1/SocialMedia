@@ -11,7 +11,7 @@ const VerifyCode = () => {
   useEffect(() => {
     const resetEmail = localStorage.getItem('resetEmail');
     if (!resetEmail) {
-      navigate('/reset-password'); // block direct access
+      navigate('/sendcode');
     }
   }, [navigate]);
 
