@@ -27,7 +27,7 @@
   gap: 20px;
   width: 100%;
   max-width: 600px; /* ⬆️ Increase from 400px to 600px */
-  padding: 30px 40px; /* ⬆️ Add padding for breathing room */
+  padding: 20px 20px; /* ⬆️ Add padding for breathing room */
   background: transparent;
 }
 

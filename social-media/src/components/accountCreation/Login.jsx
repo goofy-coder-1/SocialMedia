@@ -96,7 +96,7 @@ const Login = () => {
               <button className="btn btn-primary">Create Account</button>
             </Link>
           </div>
-
+         <Link to='/sendcode'><h5 style={{ display: 'flex', justifyContent: 'center' }}>Forgot Password??</h5></Link>
           {message && <p className="form-message">{message}</p>}
         </form>
       </div>

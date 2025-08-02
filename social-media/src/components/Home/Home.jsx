@@ -136,9 +136,9 @@ useEffect(() => {
       <div className="sidebar">
         <ul>
           <li style={{fontSize: '20px'}}>🔖 Bookmarks</li>
-          <li className='lists'>⚙️ Settings</li>
-          <li className='lists'>🕓 History</li>
-          <li className='lists'>✔️ Saved Posts</li>
+          <Link to='/requests'><li className='lists'>Requests</li></Link>
+          <Link to='/notifications'><li className='lists'>🕓 History</li></Link>
+          <Link to='/sendcode'> <li className='lists'>⚙️ Settings</li></Link>
           <Link to='/profile' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>👤 Profile</li></Link>
         </ul>
       </div>

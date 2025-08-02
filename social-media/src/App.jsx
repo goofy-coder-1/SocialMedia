@@ -16,6 +16,8 @@ import Notification from './components/notification/Notification';
 import FriendRequest from './components/Request/friendRequest';
 import Inbox from './components/Inbox/Inbox.jsx';
 import { FriendProvider } from './contextapi/Friendcontext.jsx';
+import ResetPass from './components/passwordReset/resetPass.jsx';
+import CodeVerifyPass from './components/passwordReset/codeverify.jsx';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -29,7 +31,9 @@ const App = () => {
 
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/verifycodepass" element={<CodeVerifyPass />} />
             <Route path="/signin" element={<AccountCreation />} />
+            <Route path='/sendcode' element={<ResetPass />} />
             <Route path="/code" element={<CodeVerification />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />
