@@ -1,65 +1,50 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../accountCreation/createaccount.css';
-import { baseUrl } from '../../../url';
+import { useNavigate } from 'react-router-dom';
 
 const VerifyCode = () => {
   const [code, setCode] = useState('');
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+  useEffect(() => {
+    const resetEmail = localStorage.getItem('resetEmail');
+    if (!resetEmail) {
+      navigate('/reset-password'); // block direct access
+    }
+  }, [navigate]);
 
+  const handleVerify = async (e) => {
+    e.preventDefault();
+    setError('');
     try {
-      await axios.post(`${baseUrl}/api/users/verify-reset-code`, { code });
-      setMessage('Password reset successful! Redirecting to login...');
+      await axios.post('/api/users/verify-code', { code });
       localStorage.removeItem('resetEmail');
-      setTimeout(() => navigate('/login'), 2000);
+      navigate('/login');
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Invalid or expired code.');
-    } finally {
-      setIsLoading(false);
+      setError(err.response?.data?.message || 'Invalid or expired code');
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="loading-screen">
-        <div className="spinner-border text-primary" role="status" />
-      </div>
-    );
-  }
-
   return (
-    <div className="centered-background">
-      <div className="centered-overlay">
-        <form className="centered-form" onSubmit={handleSubmit}>
-          <h1 style={{ display: 'flex', justifyContent: 'center' }}>Verify Reset Code</h1>
-
-          <div className="form-row">
-            <label>Verification Code:</label>
-            <input
-              type="text"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit">Verify & Reset Password</button>
-
-          {message && <p className="form-message">{message}</p>}
-        </form>
-      </div>
-    </div>
+    <form onSubmit={handleVerify}>
+      <h2>Verify Code</h2>
+      <input
+        type="text"
+        placeholder="6-digit code"
+        value={code}
+        maxLength={6}
+        onChange={(e) => setCode(e.target.value)}
+        required
+      />
+      <button type="submit">Verify</button>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+    </form>
   );
 };
 
 export default VerifyCode;
+
 
 
 

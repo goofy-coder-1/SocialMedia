@@ -148,7 +148,8 @@ const changePassword = async (req, res) => {
     const codeExpiresAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    tempStore.set(sanitizedEmail, {
+    // Store under scoped key to avoid conflicts with other email uses
+    tempStore.set(`reset-${sanitizedEmail}`, {
       hashedPassword,
       resetCode,
       codeExpiresAt
@@ -177,16 +178,16 @@ const changePassword = async (req, res) => {
   }
 };
 
-// Verify code and reset password (NO EMAIL REQUIRED in req.body)
+// ✅ Step 2: Verify Code Only (NO Email or Password Needed Now)
 const verifyResetCode = async (req, res) => {
   try {
     const { code } = req.body;
     if (!code) return res.status(400).json({ message: 'Code is required' });
 
     let matchedEmail = null;
-    for (const [email, data] of tempStore.entries()) {
-      if (data.resetCode === code) {
-        matchedEmail = email;
+    for (const [key, data] of tempStore.entries()) {
+      if (key.startsWith('reset-') && data.resetCode === code) {
+        matchedEmail = key.replace('reset-', '');
         break;
       }
     }
@@ -195,10 +196,10 @@ const verifyResetCode = async (req, res) => {
       return res.status(404).json({ message: 'Invalid or expired reset code' });
     }
 
-    const { codeExpiresAt, hashedPassword } = tempStore.get(matchedEmail);
+    const { codeExpiresAt, hashedPassword } = tempStore.get(`reset-${matchedEmail}`);
 
     if (codeExpiresAt < Date.now()) {
-      tempStore.delete(matchedEmail);
+      tempStore.delete(`reset-${matchedEmail}`);
       return res.status(400).json({ message: 'Code expired. Please try again.' });
     }
 
@@ -210,7 +211,7 @@ const verifyResetCode = async (req, res) => {
     user.password = hashedPassword;
     await user.save();
 
-    tempStore.delete(matchedEmail);
+    tempStore.delete(`reset-${matchedEmail}`);
     res.status(200).json({ message: 'Password has been reset successfully.' });
   } catch (err) {
     console.error('Error verifying reset code:', err);
