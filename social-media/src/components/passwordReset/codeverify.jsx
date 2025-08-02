@@ -1,51 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../accountCreation/createaccount.css';
 import { baseUrl } from '../../../url';
 
 const VerifyCode = () => {
   const [code, setCode] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const resetEmail = localStorage.getItem('resetEmail');
-    if (!resetEmail) {
-      navigate('/sendcode');
-    }
-  }, [navigate]);
-
-  const handleVerify = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setIsLoading(true);
+
     try {
-      await axios.post(`${baseUrl}/api/users/verify-code`, { code });
+      await axios.post(`${baseUrl}/api/users/verify-reset-code`, { code });
+      setMessage('Password reset successful! Redirecting to login...');
       localStorage.removeItem('resetEmail');
-      navigate('/login');
+      setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid or expired code');
+      setMessage(err.response?.data?.message || 'Invalid or expired code.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <div className="spinner-border text-primary" role="status" />
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleVerify}>
-      <h2>Verify Code</h2>
-      <input
-        type="text"
-        placeholder="6-digit code"
-        value={code}
-        maxLength={6}
-        onChange={(e) => setCode(e.target.value)}
-        required
-      />
-      <button type="submit">Verify</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </form>
+    <div className="centered-background">
+      <div className="centered-overlay">
+        <form className="centered-form" onSubmit={handleSubmit}>
+          <h1 style={{ display: 'flex', justifyContent: 'center' }}>Verify Reset Code</h1>
+
+          <div className="form-row">
+            <label>Verification Code:</label>
+            <input
+              type="text"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit">Verify & Reset Password</button>
+
+          {message && <p className="form-message">{message}</p>}
+        </form>
+      </div>
+    </div>
   );
 };
 
 export default VerifyCode;
-
 
 
 
