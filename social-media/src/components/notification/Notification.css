@@ -1,29 +1,30 @@
-
 .notification-here {
     background-color: #e6e7e8;
-    min-height: 100vh;
+    min-height: 100vh; /* Use min-height to allow content to expand */
     padding: 20px;
     overflow-y: auto;
-    display: flex; 
-    justify-content: center;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align to the top vertically */
 }
 
+/* Main notifications container */
 .notifications {
     background-color: #b2b2b5;
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    width: 900px; 
+    width: 900px; /* Set a reasonable max-width for larger screens */
     width: 100%;
-    margin: 20px; 
+    margin: 20px auto; /* Add vertical margin and auto horizontal margin for centering */
     min-height: 80vh;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 .notifications h3 {
-    font-family: 'Orbitron', sans-serif; 
-    font-size: 2.2rem; 
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
     margin-bottom: 25px;
     color: #2b2b2b;
     text-align: center;
@@ -43,35 +44,35 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
     border: 1px solid #dcdcdc;
     border-radius: 12px;
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    padding: 15px 20px; 
+    padding: 15px 20px;
 }
 
-
+/* Hover effect for list items */
 .notifications li:hover {
-    background-color: #e5e5e9 !important; 
-    transform: translateY(-3px); 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    background-color: #e5e5e9 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-
+/* 🟡 Unread highlight */
 .bg-warning-subtle {
     background-color: #a0c2e2 !important;
 }
 
 .bg-light {
-    background-color: #f8f9fa !important; 
+    background-color: #f8f9fa !important;
 }
 
-
+/* 📷 Avatar styling */
 .notifications img {
-    border: 3px solid #ffffff; 
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.25); 
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
     transition: transform 0.2s ease;
-    width: 70px; 
+    width: 70px;
     height: 70px;
-    object-fit: cover; 
+    object-fit: cover;
     flex-shrink: 0;
 }
 
@@ -79,10 +80,11 @@
     transform: scale(1.08);
 }
 
+/* 📍 Button spacing and styling */
 .notifications button {
     font-size: 0.95rem;
     padding: 8px 15px;
-    border-radius: 8px; 
+    border-radius: 8px;
     transition: all 0.2s ease;
 }
 
@@ -91,9 +93,9 @@
     transform: translateY(-1px);
 }
 
-
+/* 🗨️ Text preview */
 .notifications strong {
-    font-weight: 700; 
+    font-weight: 700;
     color: #343a40;
     line-height: 1.4;
 }
@@ -104,31 +106,31 @@
     margin-top: 5px;
 }
 
-
+/* Notification item layout - default for desktop */
 .notify-div {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
-    flex-wrap: wrap; 
-    gap: 15px; 
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .notify-div > .d-flex {
     display: flex;
     align-items: center;
-    gap: 15px; 
+    gap: 15px;
     flex-grow: 1;
-    min-width: 0; 
+    min-width: 0;
 }
 
 .notify-actions {
     display: flex;
     gap: 10px;
-    flex-shrink: 0; 
-    margin-left: auto; 
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
-
+/* Loading screen */
 .loading-screen {
     position: fixed;
     inset: 0;
@@ -140,137 +142,115 @@
     z-index: 9999;
 }
 
-
 .loading-screen .spinner-border {
     color: #007bff;
-    width: 3rem; 
-    height: 3rem; 
+    width: 3rem;
+    height: 3rem;
 }
 
-
-
-
+/* 🎯 Responsive tweaks for tablets and smaller desktops */
 @media (max-width: 991.98px) {
     .notifications {
         padding: 25px;
-        max-width: 95%; 
+        max-width: 95%;
     }
-
     .notifications h3 {
         font-size: 2rem;
     }
-
     .notify-div {
-        flex-direction: column; 
-        align-items: flex-start; 
+        flex-direction: column;
+        align-items: flex-start;
         gap: 12px;
     }
-
     .notify-actions {
-        width: 100%; 
-        justify-content: flex-start; 
+        width: 100%;
+        justify-content: flex-start;
         margin-top: 10px;
         margin-left: 0;
     }
-
     .notifications button {
-        flex-grow: 1; 
+        flex-grow: 1;
         font-size: 0.9rem;
         padding: 10px 12px;
     }
 }
 
-
-@media (max-width: 768px) {
+/* For devices smaller than 768px (e.g., larger phones) */
+@media (max-width: 767.98px) {
     .notification-here {
         padding: 15px;
     }
-
     .notifications {
         padding: 20px;
         border-radius: 15px;
         min-height: auto;
         margin: 15px auto;
     }
-
     .notifications h3 {
         font-size: 1.8rem;
     }
-
     .notifications img {
         width: 60px;
         height: 60px;
     }
-
     .notify-div > .d-flex {
         flex-direction: row;
         align-items: center;
         gap: 10px;
     }
-
     .notifications strong {
         font-size: 1.1rem;
     }
-
     .notifications small {
         font-size: 0.7rem;
     }
-
-
+    
+    /* This is the key change for stacking buttons */
     .notify-actions {
-        flex-direction: column;
-        gap: 8px; 
-        width: 100%; 
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 8px; /* Space between stacked buttons */
+        width: 100%; /* Make action buttons take full width */
     }
-
     .notifications button {
-        width: 100%; 
+        width: 100%; /* Full width for stacked buttons */
         padding: 8px 10px;
         font-size: 0.85rem;
     }
 }
 
-
+/* For devices smaller than 576px (e.g., small phones) */
 @media (max-width: 575.98px) {
     .notifications {
         padding: 15px;
         margin: 10px auto;
         border-radius: 10px;
     }
-
     .notifications h3 {
         font-size: 1.5rem;
         margin-bottom: 15px;
     }
-
     .notifications img {
         width: 50px;
         height: 50px;
     }
-
     .notifications strong {
         font-size: 1rem;
     }
-
     .notifications small {
         font-size: 0.65rem;
     }
-
     .notify-div > .d-flex {
-        flex-wrap: wrap; 
-        justify-content: center; 
+        flex-wrap: wrap;
+        justify-content: center;
         text-align: center;
     }
-
-    .notify-div > .d-flex div { 
+    .notify-div > .d-flex div {
         text-align: left;
     }
-
     .notify-actions {
         flex-direction: column;
         gap: 6px;
     }
-
     .notifications button {
         padding: 6px 8px;
         font-size: 0.8rem;
