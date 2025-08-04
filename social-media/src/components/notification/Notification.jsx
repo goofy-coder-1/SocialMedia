@@ -56,7 +56,7 @@ const Notifications = () => {
     }
   };
 
-  // 🧠 Format notification text
+  //  Format notification text
   const renderMessage = (type, senderName) => {
     switch (type) {
       case 'like': return `${senderName} liked your post.`;
@@ -67,7 +67,7 @@ const Notifications = () => {
     }
   };
 
-  // 🕒 Show loading spinner
+ 
  if (isLoading) {
   return (
     <div className="loading-screen">

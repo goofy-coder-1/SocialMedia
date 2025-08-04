@@ -1,99 +1,278 @@
-/* 🔮 Background wrapper */
+
 .notification-here {
-  background-color: #e6e7e8;
-  height: 100vh;
-  padding: 20px;
-  overflow-y: auto;
+    background-color: #e6e7e8;
+    min-height: 100vh;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex; 
+    justify-content: center;
 }
 
 .notifications {
-  background-color: #b2b2b5;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  max-width: 90%;
-  width: 100%;
-  margin: auto;
-  height: 98vw;
+    background-color: #b2b2b5;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 900px; 
+    width: 100%;
+    margin: 20px; 
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column; 
+}
+
+.notifications h3 {
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 2.2rem; 
+    margin-bottom: 25px;
+    color: #2b2b2b;
+    text-align: center;
+}
+
+.notifications .alert {
+    text-align: center;
+    padding: 15px;
+    font-size: 1.1rem;
+    color: #495057;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    border-radius: 8px;
 }
 
 .notifications li {
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    margin-bottom: 15px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 15px 20px; 
 }
 
-/* 🟡 Unread highlight */
+
+.notifications li:hover {
+    background-color: #e5e5e9 !important; 
+    transform: translateY(-3px); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+}
+
+
 .bg-warning-subtle {
-  background-color: #a0c2e2 !important;
+    background-color: #a0c2e2 !important;
 }
-
 
 .bg-light {
-  background-color: #f4f4f4 !important;
+    background-color: #f8f9fa !important; 
 }
 
-/* 📷 Avatar styling */
+
 .notifications img {
-  border: 2px solid #fff;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease;
+    border: 3px solid #ffffff; 
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.25); 
+    transition: transform 0.2s ease;
+    width: 70px; 
+    height: 70px;
+    object-fit: cover; 
+    flex-shrink: 0;
 }
+
 .notifications img:hover {
-  transform: scale(1.05);
+    transform: scale(1.08);
 }
 
-/* 📍 Button spacing */
 .notifications button {
-  font-size: 1rem;
+    font-size: 0.95rem;
+    padding: 8px 15px;
+    border-radius: 8px; 
+    transition: all 0.2s ease;
 }
 
-/* 🗨️ Text preview */
+.notifications button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+
 .notifications strong {
-  font-weight: 600;
-  color: #2b2b2b;
+    font-weight: 700; 
+    color: #343a40;
+    line-height: 1.4;
 }
 .notifications small {
-  font-size: 0.75rem;
-  color: #6c757d;
+    font-size: 0.8rem;
+    color: #6c757d;
+    display: block;
+    margin-top: 5px;
 }
 
-/* 🎯 Responsive tweaks */
-@media (max-width: 768px) {
-  .notifications {
-    padding: 15px;
-  }
-  .notifications img {
-    width: 32px;
-    height: 32px;
-  }
-  .notifications strong {
-    font-size: 0.9rem;
-  }
-  .notify-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .notify-actions button {
-    height: 40px;
-    font-size: medium;
-  }
-}
-.notifications li:hover {
-  background-color: #f0f0f8;
-  transform: translateY(-2px);
-}
+
 .notify-div {
-  height: 100px;
-  font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 15px; 
 }
+
+.notify-div > .d-flex {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    flex-grow: 1;
+    min-width: 0; 
+}
+
+.notify-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0; 
+    margin-left: auto; 
+}
+
 
 .loading-screen {
-  position: fixed;  
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.4);  
-  backdrop-filter: blur(3px);      
-  z-index: 9999;     
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+}
+
+
+.loading-screen .spinner-border {
+    color: #007bff;
+    width: 3rem; 
+    height: 3rem; 
+}
+
+
+
+
+@media (max-width: 991.98px) {
+    .notifications {
+        padding: 25px;
+        max-width: 95%; 
+    }
+
+    .notifications h3 {
+        font-size: 2rem;
+    }
+
+    .notify-div {
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 12px;
+    }
+
+    .notify-actions {
+        width: 100%; 
+        justify-content: flex-start; 
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .notifications button {
+        flex-grow: 1; 
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .notification-here {
+        padding: 15px;
+    }
+
+    .notifications {
+        padding: 20px;
+        border-radius: 15px;
+        min-height: auto;
+        margin: 15px auto;
+    }
+
+    .notifications h3 {
+        font-size: 1.8rem;
+    }
+
+    .notifications img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .notify-div > .d-flex {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .notifications strong {
+        font-size: 1.1rem;
+    }
+
+    .notifications small {
+        font-size: 0.7rem;
+    }
+
+
+    .notify-actions {
+        flex-direction: column;
+        gap: 8px; 
+        width: 100%; 
+    }
+
+    .notifications button {
+        width: 100%; 
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+    .notifications {
+        padding: 15px;
+        margin: 10px auto;
+        border-radius: 10px;
+    }
+
+    .notifications h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .notifications img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .notifications strong {
+        font-size: 1rem;
+    }
+
+    .notifications small {
+        font-size: 0.65rem;
+    }
+
+    .notify-div > .d-flex {
+        flex-wrap: wrap; 
+        justify-content: center; 
+        text-align: center;
+    }
+
+    .notify-div > .d-flex div { 
+        text-align: left;
+    }
+
+    .notify-actions {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .notifications button {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
 }
