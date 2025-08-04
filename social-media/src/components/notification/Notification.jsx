@@ -8,7 +8,7 @@ const Notifications = () => {
   const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('token');
 
-  // 🔄 Load notifications when component mounts
+  //  Load notifications when component mounts
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
@@ -28,7 +28,7 @@ const Notifications = () => {
     fetchNotifications();
   }, []);
 
-  // ✅ Mark a notification as read
+  //  Mark a notification as read
   const markAsRead = async (id) => {
     try {
       await axios.patch(`${baseUrl}/api/pop/notifications/${id}/read`, {}, {
@@ -43,7 +43,7 @@ const Notifications = () => {
     }
   };
 
-  // 🗑️ Delete a notification
+  //  Delete a notification
   const deleteNotification = async (id) => {
     try {
       await axios.delete(`${baseUrl}/api/pop/notifications/${id}`, {

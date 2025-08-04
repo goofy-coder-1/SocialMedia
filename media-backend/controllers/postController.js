@@ -154,12 +154,16 @@ const editComment = async (req, res) => {
 const deleteComment = async (req, res) => {
   try {
     const { postId, commentId } = req.params;
-    
+    console.log('PostId:', postId);
+    console.log('CommentId:', commentId);
+
     const post = await Post.findById(postId);
     if (!post) return res.status(404).json({ message: 'Post not found' });
-    
+    console.log('Post found:', post);
+
     const comment = post.comments.id(commentId);
     if (!comment) return res.status(404).json({ message: 'Comment not found' });
+    console.log('Comment found:', comment);
 
     if (comment.author.toString() !== req.userId) {
       return res.status(403).json({ message: 'Unauthorized' });
@@ -170,7 +174,7 @@ const deleteComment = async (req, res) => {
 
     res.json({ message: 'Comment deleted' });
   } catch (err) {
-    console.error('Delete comment error:', err);
+    console.error('Delete comment error:', err.message, err.stack);
     res.status(500).json({ message: 'Delete comment failed' });
   }
 };

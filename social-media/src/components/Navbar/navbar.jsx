@@ -6,12 +6,17 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { LuMessageSquareMore } from 'react-icons/lu';
 import { UserContext } from '../../contextapi/usercontext';
 import './navbar.css';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const { user } = useContext(UserContext);
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const currentPath = useLocation().pathname;
+  
+  const handleRequest = () => {
+    toast.info('This section is still under construction, we will let you know when its completed')
+  }
 
   const handleSearch = () => {
     const trimmedQuery = query.trim();
@@ -55,7 +60,7 @@ const Navbar = () => {
           <Link to="/signin">
             <button className="btn login-btn">SIGN IN</button>
           </Link>
-          <button className="btn login-btn">Request Help</button>
+          <button className="btn login-btn" onClick={handleRequest}>Request Help</button>
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import { PostContext } from '/src/contextapi/postcontext.jsx';
 import { SlLike } from "react-icons/sl";
 import { useFriendContext } from '/src/contextapi/Friendcontext.jsx';
 import '../Home/Home.css';
+import { toast } from 'react-toastify';
 import { baseUrl } from '../../../url';
 
 const Home = () => {
@@ -22,7 +23,9 @@ const [editingCommentId, setEditingCommentId] = useState(null);
 const [editedCommentText, setEditedCommentText] = useState('');
 const [openMenuForCommentId, setOpenMenuForCommentId] = useState(null);
 
-
+const handleRequest = () => {
+    toast.info('This section is still under construction, we will let you know when its completed')
+  }
   
   const handleEditComment = async (postId, commentId) => {
   try {
@@ -43,17 +46,23 @@ const [openMenuForCommentId, setOpenMenuForCommentId] = useState(null);
 
 const handleDeleteComment = async (postId, commentId) => {
   if (!window.confirm('Are you sure you want to delete this comment?')) return;
+
   try {
-     await axios.delete(
+    console.log("Deleting comment", commentId, "from post", postId);
+
+    const res = await axios.delete(
       `${baseUrl}/api/postsapi/posts/${postId}/comments/${commentId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+
     console.log("Comment deleted:", res.data);
-    loadContent();
+    toast.success('comment deleted')
+    loadContent(); 
   } catch (err) {
-    console.error("Delete error:", err.response?.data || err.message);
+    console.error("Delete error:", err.response?.status, err.response?.data || err.message);
+    toast.error('deletion failed')
   }
 };
 
@@ -174,7 +183,7 @@ useEffect(() => {
       {/* Left Sidebar for simple controls*/}
       <div className="sidebar">
         <ul style={{padding: '20px'}}>
-          <li style={{fontSize: '20px'}}>🔖 Bookmarks</li>
+          <li style={{fontSize: '20px'}} onClick={handleRequest}>🔖 Bookmarks</li>
           <Link to='/requests' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Requests</li></Link>
           <Link to='/sendcode' style={{color: 'inherit', textDecoration:'none'}}> <li className='lists'>⚙️ Settings</li></Link>
           <Link to='/profile' style={{color: 'inherit', textDecoration:'none'}}><li className='lists'>👤 Profile</li></Link>
